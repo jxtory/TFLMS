@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 1.6.0
+Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB06R48S4
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--Head-->
+<head>
+    <meta charset="utf-8" />
+    <title>跳转提示</title>
+    {include file='common/head' /}
+</head>
+<!--Head Ends-->
+<!--Body-->
+<body>
+    <div class="login-container animated fadeInDown">
+        <div class="loginbox bg-white">
+            <div class="well system-message">
+                <?php switch ($code) {?>
+                    <?php case 1:?>
+                    <h3><!-- <i class="glyphicon glyphicon-ok"></i> -->处理成功</h3>
+                    <p class="success text-success"><?php echo(strip_tags($msg));?></p>
+                    <?php break;?>
+                    <?php case 0:?>
+                    <h3><!-- <i class="glyphicon glyphicon-remove"> -->处理失败</i></h3>
+                    <p class="error text-danger"><?php echo(strip_tags($msg));?></p>
+                    <?php break;?>
+                <?php } ?>
+                <p class="detail"></p>
+                <hr>
+                <p class="text-info">
+                    即将 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait+3);?></b>
+                </p>
+            </div>
+        </div>
+        <div class="logobox">
+            <span class="text-primary">__apn__————By IT SUPPORT</span>
+        </div>
+    </div>
+
+
+    <!--Basic Scripts-->
+    {include file='common/script' /}
+    <!--Beyond Scripts-->
+
+    <script src="__dm__/js/ba/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__dm__/js/nest/canvas-nest.js"></script>
+    <script type="text/javascript">
+        (function(){
+            var wait = document.getElementById('wait'),
+                href = document.getElementById('href').href;
+            var interval = setInterval(function(){
+                var time = --wait.innerHTML;
+                if(time <= 0) {
+                    location.href = href;
+                    clearInterval(interval);
+                };
+            }, 1000);
+        })();
+    </script>
+</body>
+<!--Body Ends-->
+</html>

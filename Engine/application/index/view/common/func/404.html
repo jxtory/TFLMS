@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>抱歉 页面找不到了</title>
+</head>
+
+<body>
+	<!-- <h1 class="text"><span>404 !</span></h1> -->
+	<h2 class="text"><span>抱歉,页面找不到了</span></h2>
+	<h2 class="text"><a id="href" href="javascript:history.back(-1);"></a><span id="wait">5</span> <span>秒后返回上一页</span></h2>
+	<script type="text/javascript">
+        (function(){
+            var wait = document.getElementById('wait'),
+                href = document.getElementById('href').href;
+            var interval = setInterval(function(){
+                var time = --wait.innerHTML;
+                if(time <= 0) {
+                    location.href = href;
+                    clearInterval(interval);
+                };
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# 引擎文件
+/Engine/*
+
+# 一些框架
+/framework/assets/huiadmin/*
+/framework/assets/Ueditor/*
+
+# 上传中心
+/uploadcenter
+/ueditor
+
+# 配置目录
+/config
+
+#忽略的内容
+!/Engine/application
