@@ -13,4 +13,5 @@ return [
     '__pattern__' => [
         'name' => '\w+',
     ],
+    'ht' =>	'manager/index/index'
 ];

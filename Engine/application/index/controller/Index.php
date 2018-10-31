@@ -9,5 +9,10 @@ class Index extends TflmsBase
     	return $this->fetch("index");
     }
 
+    public function abc()
+    {
+    	return "123";
+    }
+
 }
 
