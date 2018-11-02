@@ -9,9 +9,18 @@ class Index extends TflmsBase
     	return $this->fetch("index");
     }
 
-    public function abc()
+    // 规格
+    public function format()
     {
-    	return "123";
+    	// 
+    	return $this->fetch("format");
+    }
+
+    // 文件类型
+    public function filetype()
+    {
+        // 
+        return $this->fetch("filetype");
     }
 
 }
