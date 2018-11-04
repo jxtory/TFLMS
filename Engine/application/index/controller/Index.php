@@ -10,8 +10,12 @@ class Index extends TflmsBase
     }
 
     // 制作说明
-    public function instruction()
+    public function instruction($type = "Picture")
     {
+        if($type == "video"){
+            return $this->fetch("instruction_video");
+        }
+
         return $this->fetch("instruction");
     }
 
