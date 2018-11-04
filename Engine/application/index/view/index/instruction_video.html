@@ -13,7 +13,10 @@
 			<div class="well">
 				<p><h3>视频制作说明</h3></p>
 				<hr style='background-color: #aaa;height:1px;border:none;'>
-				<p class="text-left"><a class="btn btn-info btn-sm" href="{:url('index/index/instruction', ['type' => ''])}">查看：图像制作说明</a></p>
+				<p class="text-left">
+					<a class="btn btn-info btn-sm" href="{:url('index/index/instruction', ['type' => ''])}">查看：图像制作说明</a>
+					More>><a href="{:url('index/index/format')}#reader">原理说明与参考</a>
+				</p>
 				<div class="text-center">
 					<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="auto" poster="/video/Instructions_Video.jpg" data-setup="{}" playsinline>
 					  <source src="/video/Instructions_Video.mp4" type='video/mp4'>
@@ -22,6 +25,9 @@
 					    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
 					  </p>
 					</video>
+				</div>
+				<div class="text-center">
+					如果还有疑问，请仔细阅读：<a href="{:url('index/index/format')}#reader">原理说明与参考</a>
 				</div>
 			</div>
 		</div>
