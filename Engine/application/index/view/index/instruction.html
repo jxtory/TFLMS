@@ -15,8 +15,7 @@
 				<hr style='background-color: #aaa;height:1px;border:none;'>
 				<p class="text-left"><a class="btn btn-info btn-sm" href="{:url('index/index/instruction', ['type' => 'video'])}">查看：视频制作说明</a></p>
 				<div class="text-center">
-					<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="auto" width="550" height="400"
-					poster="MY_VIDEO_POSTER.jpg" data-setup="{}" playsinline>
+					<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="auto" poster="/video/Instructions_Picture.jpg" data-setup playsinline>
 					  <source src="/video/Instructions_Picture.mp4" type='video/mp4'>
 					  <p class="vjs-no-js">
 					    To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -27,6 +26,15 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		// 视频自适应处理
+		$(function(){
+			var player = videojs('my-video', { fluid: true }, function () {
+			           // console.log('Good to go!');
+			           // this.play(); // if you don't trust autoplay for some reason  
+			})
+		});
+	</script>
 	{include file="Common/footer" /}
 	{include file="Common/js" /}
 </body>
