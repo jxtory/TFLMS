@@ -9,6 +9,12 @@ class Index extends TflmsBase
     	return $this->fetch("index");
     }
 
+    // 制作说明
+    public function instruction()
+    {
+        return $this->fetch("instruction");
+    }
+
     // 规格
     public function format()
     {

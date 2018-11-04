@@ -8,6 +8,7 @@
 # 上传中心
 /uploadcenter
 /ueditor
+/video
 
 # 配置目录
 /config
