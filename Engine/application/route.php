@@ -13,5 +13,7 @@ return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-    'ht' =>	'manager/index/index'
+    'ht' =>	'manager/index/index',
+    'upload'	=>	'index/index/upload',
+    'instruction'	=>	'index/index/instruction'
 ];
