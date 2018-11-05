@@ -39,4 +39,15 @@ class TflmsMBase extends Allbase
     {
 
     }
+
+    // 写日志
+    public function wLog($content, $manager = "system")
+    {
+        $datas = [
+            'logtext'   =>  $content,
+            'logtime'   =>  date("Y-m-d h:i:s", time()),
+            'form'      =>  $manager
+        ];
+        $res = db("log")->insert($datas);        
+    }
 }
