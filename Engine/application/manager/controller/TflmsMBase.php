@@ -6,7 +6,7 @@ class TflmsMBase extends Allbase
 {
 	// 跳转回首页的设置
     protected $rehome = "<script>window.location.replace('/');</script>";
-    private $managerKey = "/config/key";
+    protected $managerKey = "config/manager/key.php";
 
     public function _initialize()
     {
@@ -35,4 +35,8 @@ class TflmsMBase extends Allbase
         return;
 	}
 
+    public function SetPassword()
+    {
+
+    }
 }
