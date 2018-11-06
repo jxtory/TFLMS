@@ -51,9 +51,58 @@ class Passport extends TflmsMBase
         return $this->fetch('');
     }
 
+    // 创建账号
+    public function creaccount()
+    {
+        if(!session('manager') && session("manager_who") != "admin"){
+            $this->wLog("[系统检测] 账户攻击检测告警！");
+            return $this->redirect('/ht');
+        }
+
+        // if(session("manager_who"))
+        if(request()->isPost()){
+            // 载入账号
+            $datas = input("post.");
+
+            if(!strlen($datas['username']) > 0){
+                $this->error("账号不能为空！");
+            }
+
+            if($datas['username'] == $datas['valusername'] && strlen($datas['username']) > 0){
+                $checkIt = db("account")->where("account", $datas['username'])->find();
+                if(!$checkIt){
+                    $data = [
+                        'account'       =>      $datas['username'],
+                        'password'      =>      md5("lcd888")
+                    ];
+                    $creIt = db("account")->insert($data);
+                    if($creIt == 1){
+                        $this->wLog("[管理行为] 系统账号创建了管理者账号：{$datas['username']}！");
+                        $this->success($datas['username'] . ", 创建成功！");
+                    } else {
+                        $this->error("账号创建失败！");
+                    }
+
+                } else {
+                    $this->error("账号已存在！");
+                }
+
+            } else {
+                $this->error("验证失败？请确保两次输入一致！");
+            }
+
+        }
+
+        return $this->fetch('');
+    }
+
     // 修改密码
     public function repw()
     {
+        if(!session('manager')){
+            return $this->redirect('passport/login');
+        }
+
         if(request()->isPost()){
             // 载入密码
             $datas = input("post.");

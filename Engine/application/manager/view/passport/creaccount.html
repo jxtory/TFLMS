@@ -11,14 +11,11 @@
 	<div class="jumbotron text-center" style="margin-bottom:0">
 		<h3 class="hidden-xs">{$appName}</h3>
 		<h5 class="visible-xs-block">{$appName}</h5>
-		<p>
-			<a type="submit" class="btn btn-link" href="/">前台系统</a>
-		</p>
 	</div>
 
 	<div class="container">
 		<div class="row">
-			<h3>管理者，请登录:</h3>			
+			<h3>创建账号:</h3>			
 		</div>
 	</div>
 
@@ -26,7 +23,7 @@
 		<div class="row">
 			<div class="well">
 				
-			<form class="form-horizontal" role="form" method="post" action="login.html">
+			<form class="form-horizontal" role="form" method="post" action="{:url('manager/passport/creaccount')}">
 				<div class="form-group">
 					<label for="username" class="col-sm-2 control-label">账号</label>
 					<div class="col-sm-10">
@@ -36,18 +33,19 @@
 				</div>
 
 				<div class="form-group">
-					<label for="password" class="col-sm-2 control-label">密码</label>
+					<label for="username" class="col-sm-2 control-label">确认</label>
 					<div class="col-sm-10">
-						<input type="password" name="password" class="form-control" id="password" placeholder="管理者密码">						</div>
+						<input type="text" name="valusername" class="form-control" id="valusername" 
+							   placeholder="请输入管理者账号">
+					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10 text-center">
-						<button type="submit" class="btn btn-default">登录</button>
+						<button type="submit" class="btn btn-default">创建</button>
+						<a type="submit" class="btn btn-info" href="/ht">放弃</a>
 					</div>
-
 				</div>
-
 			</form>			
 			</div>
 		</div>

@@ -15,5 +15,6 @@ return [
     ],
     'ht' =>	'manager/index/index',
     'upload'	=>	'index/index/upload',
-    'instruction'	=>	'index/index/instruction'
+    'instruction'	=>	'index/index/instruction',
+    'ht/cac'	=>	'manager/passport/creaccount'
 ];
