@@ -6,7 +6,6 @@ class TflmsMBase extends Allbase
 {
 	// 跳转回首页的设置
     protected $rehome = "<script>window.location.replace('/');</script>";
-    protected $managerKey = "config/manager/key.php";
 
     public function _initialize()
     {
@@ -14,17 +13,16 @@ class TflmsMBase extends Allbase
     	// 基础初始化的东西开始
 
         parent::_initialize();
-        if(!file_exists($this->managerKey)){
-            $this->redirect("/");
+        if(empty(db("account")->select())){
+            db("account")->insert(['account' => 'admin', 'password' => md5('lcd888')], true);
         }
-
+        
         //检测登陆状态
         if(!session('manager')){
             return $this->redirect('passport/login');
         } else {
 
         }
-
 
     }
 
@@ -34,11 +32,6 @@ class TflmsMBase extends Allbase
 		abort(404, "Error!");
         return;
 	}
-
-    public function SetPassword()
-    {
-
-    }
 
     // 写日志
     public function wLog($content, $manager = "system")
