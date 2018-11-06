@@ -14,7 +14,7 @@ class TflmsMBase extends Allbase
 
         parent::_initialize();
         if(empty(db("account")->select())){
-            db("account")->insert(['account' => 'admin', 'password' => md5('lcd888')], true);
+            db("account")->insert(['account' => 'admin', 'password' => md5('led888')], true);
         }
         
         //检测登陆状态

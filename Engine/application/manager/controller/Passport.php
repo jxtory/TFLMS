@@ -73,7 +73,7 @@ class Passport extends TflmsMBase
                 if(!$checkIt){
                     $data = [
                         'account'       =>      $datas['username'],
-                        'password'      =>      md5("lcd888")
+                        'password'      =>      md5("led888")
                     ];
                     $creIt = db("account")->insert($data);
                     if($creIt == 1){
