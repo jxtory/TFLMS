@@ -39,17 +39,17 @@ class Index extends TflmsMBase
                     switch ($datas['act'])
                     {
                     case "opd":
-                        $this->CreControlKey("opendoor");
+                        if($this->CreControlKey("opendoor")){return "操作成功！";}
                         break;
                     case "cld":
-                        $this->CreControlKey("closedoor");
+                        if($this->CreControlKey("closedoor")){return "操作成功！";}
                         break;
                     case "op15":
-                        $this->CreControlKey("opendoor15");
+                        if($this->CreControlKey("opendoor15")){return "操作成功！";}
                         break;
                     default:
                     }
-                    return "操作成功！";
+                    return "操作失败！";
                 } else {
                     return "操作失败！";
                 }

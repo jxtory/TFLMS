@@ -34,7 +34,9 @@ namespace TflmsW
 
         private void Form1_Load(object sender, EventArgs e)
         {
-          //string AppPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            // 初始化检查
+            InitCheck();
+            //string AppPath = System.AppDomain.CurrentDomain.BaseDirectory;
             int idwErrorCode = 0;
 
             Cursor = Cursors.WaitCursor;
@@ -138,6 +140,26 @@ namespace TflmsW
                 }
                 Cursor = Cursors.Default;
 
+            }
+
+        }
+
+        // 初始化检查
+        public void InitCheck()
+        {
+            DeleteFiles("app_quit");
+            DeleteFiles("opendoor");
+            DeleteFiles("opendoor15");
+            DeleteFiles("closedoor");
+        }
+
+        public void DeleteFiles(string path)
+        {
+            string appPath = @System.AppDomain.CurrentDomain.BaseDirectory;
+
+            if (File.Exists(appPath + "/" + path))
+            {
+                DeleteFile(appPath + "/" + path);
             }
 
         }

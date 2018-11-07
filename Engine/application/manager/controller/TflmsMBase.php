@@ -49,9 +49,10 @@ class TflmsMBase extends Allbase
     {
         if(!file_exists($keyName)){
             file_put_contents($keyName, $desc);
+            return true;
         } else {
-            return;
+            return false;
         }
-        return;
+        return false;
     } 
 }
