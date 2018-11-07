@@ -179,7 +179,60 @@ namespace TflmsW
                // 3.2、删除文件
                File.Delete(path);
            }
-           File.Delete(path);        
-    }
+           File.Delete(path);
+
+        }
+
+        public void AddPictureBox(int left, int top)
+        {
+            PictureBox pic = new PictureBox();
+            this.Controls.Add(pic);
+            pic.Left = left;
+            pic.Top = top;
+            pic.Image = Image.FromFile(@"E:\\86d6277f9e2f070891004d53e424b899a901f258.jpg");
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 置顶和取消置顶
+            if(e.KeyCode == Keys.Q)
+            {
+                this.TopMost = !this.TopMost;
+            }
+
+            // 窗体边框
+            if(e.KeyCode == Keys.B)
+            {
+                if(this.FormBorderStyle == FormBorderStyle.Sizable)
+                {
+                    this.FormBorderStyle = FormBorderStyle.None;
+                } else
+                {
+                    this.Width = 800;
+                    this.Height = 600;
+                    this.Left = 0;
+                    this.Top = 0;
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                }
+            }
+
+            // 窗体最大化
+            if(e.KeyCode == Keys.M)
+            {
+                if(this.FormBorderStyle == FormBorderStyle.None)
+                {
+                    this.Width = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+                    this.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+                    this.Left = 0;
+                    this.Top = 0;
+                }
+            }
+
+            // 测试图片
+            if(e.KeyCode == Keys.T)
+            {
+                AddPictureBox(0, 0);
+            }
+        }
     }
 }
