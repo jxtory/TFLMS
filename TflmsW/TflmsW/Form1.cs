@@ -79,7 +79,7 @@ namespace TflmsW
                 Cursor = Cursors.WaitCursor;
                 if (axCZKEM1.ACUnlock(iMachineNumber,iDelay))
                 {
-                    MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
+                    //MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace TflmsW
                 Cursor = Cursors.WaitCursor;
                 if (axCZKEM1.ACUnlock(iMachineNumber,iDelay))
                 {
-                    MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
+                    //MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
                 }
                 else
                 {
@@ -129,7 +129,7 @@ namespace TflmsW
                 Cursor = Cursors.WaitCursor;
                 if (axCZKEM1.ACUnlock(iMachineNumber,iDelay))
                 {
-                    MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
+                    //MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
                 }
                 else
                 {

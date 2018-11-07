@@ -16,5 +16,6 @@ return [
     'ht' =>	'manager/index/index',
     'upload'	=>	'index/index/upload',
     'instruction'	=>	'index/index/instruction',
-    'ht/cac'	=>	'manager/passport/creaccount'
+    'ht/cac'	=>	'manager/passport/creaccount',
+    'ht/dc'	=>	'manager/index/doorcontrol'
 ];

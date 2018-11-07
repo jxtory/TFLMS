@@ -28,5 +28,37 @@ class Index extends TflmsMBase
         return $this->fetch();
     }
 
+    // 大门控制管理器
+    public function doorcontrol()
+    {
+        file_put_contents("123", "123");
+        if(session('manager') == "Manager_AuthOk" && session("manager_who") != ""){
+            if(request()->isPost()){
+                if(input("post.type") == "doorControl"){
+                    $datas = input("post.");
+                    unset($datas['type']);
+
+                    switch ($datas['act'])
+                    {
+                    case "opd":
+                        $this->CreControlKey("opendoor");
+                        break;
+                    case "cld":
+                        $this->CreControlKey("closedoor");
+                        break;
+                    case "op15":
+                        $this->CreControlKey("opendoor15");
+                        break;
+                    default:
+                    }
+                }
+            }
+        } else {
+            return "Error!";
+        }
+
+        return;
+    }
+
 }
 

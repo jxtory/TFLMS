@@ -43,4 +43,15 @@ class TflmsMBase extends Allbase
         ];
         $res = db("log")->insert($datas);        
     }
+
+    // 创建控制钥匙
+    public function CreControlKey($keyName = "", $desc = "")
+    {
+        if(!file_exists($keyName)){
+            file_put_contents("/" . $keyName, $desc);
+        } else {
+            return;
+        }
+        return;
+    } 
 }
