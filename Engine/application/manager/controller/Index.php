@@ -35,16 +35,20 @@ class Index extends TflmsMBase
             if(request()->isPost()){
                 if(input("post.type") == "doorControl"){
                     $datas = input("post.");
+                    $who = session("manager_who");
                     unset($datas['type']);
                     switch ($datas['act'])
                     {
                     case "opd":
+                        $this->wLog("[管理行为]控制大门常开", $who);
                         if($this->CreControlKey("opendoor")){return "操作成功！";}
                         break;
                     case "cld":
+                        $this->wLog("[管理行为]控制大门自动", $who);
                         if($this->CreControlKey("closedoor")){return "操作成功！";}
                         break;
                     case "op15":
+                        $this->wLog("[管理行为]临时开门15秒", $who);
                         if($this->CreControlKey("opendoor15")){return "操作成功！";}
                         break;
                     default:
