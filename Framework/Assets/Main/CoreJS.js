@@ -3,7 +3,7 @@ $(function(){
 	// ht login
 	$(".managerhd span").click(function(event) {
 		window.location.href = "/ht";
-	});	
+	});
 
 	// Define DC Url
 	var DCUrl = "/ht/dc";
@@ -20,13 +20,12 @@ function GetPageName(pagename){
 // DoorControl Behavior
 function DoorControl(url)
 {
-	$("a.doorhd").click(function(event) {
-		layer.msg($("this").data('ev'));return;
+	$("#doorhd a").click(function(event) {
 		$.post(url, {
 			type: 'doorControl',
-			act: $("this").data('ev')
+			act: $(this).data('ev')
 		} ,function(data, status){
-			if(status == "ok"){
+			if(status == "success"){
 				layer.msg(data);
 			}
 		});

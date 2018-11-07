@@ -31,13 +31,11 @@ class Index extends TflmsMBase
     // 大门控制管理器
     public function doorcontrol()
     {
-        file_put_contents("123", "123");
-        if(session('manager') == "Manager_AuthOk" && session("manager_who") != ""){
+        if((session('manager') == "Manager_AuthOk") && (strlen(session("manager_who")) > 0)){
             if(request()->isPost()){
                 if(input("post.type") == "doorControl"){
                     $datas = input("post.");
                     unset($datas['type']);
-
                     switch ($datas['act'])
                     {
                     case "opd":
@@ -51,13 +49,16 @@ class Index extends TflmsMBase
                         break;
                     default:
                     }
+                    return "操作成功！";
+                } else {
+                    return "操作失败！";
                 }
             }
         } else {
             return "Error!";
         }
 
-        return;
+        return "Error!";
     }
 
 }

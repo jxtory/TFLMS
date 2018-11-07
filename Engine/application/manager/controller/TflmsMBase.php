@@ -48,7 +48,7 @@ class TflmsMBase extends Allbase
     public function CreControlKey($keyName = "", $desc = "")
     {
         if(!file_exists($keyName)){
-            file_put_contents("/" . $keyName, $desc);
+            file_put_contents($keyName, $desc);
         } else {
             return;
         }
