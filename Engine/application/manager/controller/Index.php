@@ -10,6 +10,7 @@ class Index extends TflmsMBase
     	return $this->fetch();
     }
 
+    // 日志管理
     public function log()
     {
     	// 系统日志
@@ -17,6 +18,14 @@ class Index extends TflmsMBase
         $this->assign("logs", $logs);
     	$this->SetPageName("系统日志");
     	return $this->fetch();
+    }
+
+    // 大门控制
+    public function door()
+    {
+        // 大门控制
+        $this->SetPageName("大门控制");
+        return $this->fetch();
     }
 
 }

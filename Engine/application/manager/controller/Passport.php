@@ -54,8 +54,8 @@ class Passport extends TflmsMBase
     // 创建账号
     public function creaccount()
     {
-        if(!session('manager') && session("manager_who") != "admin"){
-            $this->wLog("[系统检测] 账户攻击检测告警！");
+        if(!session('manager') || session("manager_who") != "admin"){
+            $this->wLog("[系统检测] 账户系统检测到攻击告警！");
             return $this->redirect('/ht');
         }
 

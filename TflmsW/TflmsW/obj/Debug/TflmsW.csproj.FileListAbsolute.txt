@@ -8,3 +8,6 @@ E:\TFLMS\TflmsW\TflmsW\obj\Debug\TflmsW.csproj.GenerateResource.cache
 E:\TFLMS\TflmsW\TflmsW\obj\Debug\TflmsW.csproj.CoreCompileInputs.cache
 E:\TFLMS\TflmsW\TflmsW\obj\Debug\TflmsW.exe
 E:\TFLMS\TflmsW\TflmsW\obj\Debug\TflmsW.pdb
+E:\TFLMS\TflmsW\TflmsW\obj\Debug\TflmsW.csproj.ResolveComReference.cache
+E:\TFLMS\TflmsW\TflmsW\obj\Debug\Interop.zkemkeeper.dll
+E:\TFLMS\TflmsW\TflmsW\bin\Debug\Interop.zkemkeeper.dll
