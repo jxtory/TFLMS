@@ -1,0 +1,12 @@
+E:\TFLMS\TflmsW\TflmsW\bin\Release\TflmsW.exe.config
+E:\TFLMS\TflmsW\TflmsW\bin\Release\TflmsW.exe
+E:\TFLMS\TflmsW\TflmsW\bin\Release\TflmsW.pdb
+E:\TFLMS\TflmsW\TflmsW\bin\Release\Interop.zkemkeeper.dll
+E:\TFLMS\TflmsW\TflmsW\obj\Release\Interop.zkemkeeper.dll
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csproj.ResolveComReference.cache
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.Form1.resources
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.Properties.Resources.resources
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csproj.GenerateResource.cache
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csproj.CoreCompileInputs.cache
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.exe
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.pdb

@@ -22,6 +22,23 @@ namespace TflmsW
             InitializeComponent();
         }
 
+        // LED 显示器开关控制
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("User32.dll", EntryPoint = "SendMessage")]
+        private static extern int SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, string lParam);
+
+        [DllImport("User32.dll ")]
+        public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childe, string strclass, string FrmText);
+
+        // 事件常量
+        const int WM_SETTEXT = 0x000C;
+        const int WM_LBUTTONDOWN = 0x0201;
+        const int WM_LBUTTONUP = 0x0202;
+        const int WM_CLOSE = 0x0010;
+
+        IntPtr hwnd = FindWindow(null, "大屏控制显示系统");
         // 四分之三·门禁管理系统
         //Create Standalone SDK class dynamicly.
         public zkemkeeper.CZKEMClass axCZKEM1 = new zkemkeeper.CZKEMClass();
@@ -323,7 +340,25 @@ namespace TflmsW
             // 测试图片
             if(e.KeyCode == Keys.T)
             {
-                AddPictureBox(0, 0);
+                //AddPictureBox(0, 0);
+                MessageBox.Show("开机");
+                IntPtr itbtn = FindWindowEx(hwnd, IntPtr.Zero, "TButton", "开机");
+                //SendMessage(itbtn, WM_SETTEXT, IntPtr.Zero, "嗯 挺好的");
+                SetForegroundWindow(itbtn);
+                SendMessage(itbtn, 0x, IntPtr.Zero, null);
+                SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
+            }
+
+            // 测试图片
+            if (e.KeyCode == Keys.E)
+            {
+                //AddPictureBox(0, 0);
+                MessageBox.Show("关机");
+                IntPtr itbtn = FindWindowEx(hwnd, IntPtr.Zero, "TButton", "关机");
+                //SendMessage(itbtn, WM_SETTEXT, IntPtr.Zero, "嗯 挺好的");
+                SetForegroundWindow(itbtn);
+                SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
+                SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
             }
 
             // 测试图片
