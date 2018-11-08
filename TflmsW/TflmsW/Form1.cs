@@ -152,7 +152,7 @@ namespace TflmsW
                 int iDelay = Convert.ToInt32("-1");//time to delay
 
                 Cursor = Cursors.WaitCursor;
-                if (axCZKEM1.ACUnlock(iMachineNumber,iDelay))
+                if (axCZKEM1.ACUnlock(iMachineNumber, iDelay))
                 {
                     //MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
                 }
@@ -177,7 +177,7 @@ namespace TflmsW
                 int iDelay = Convert.ToInt32("15");//time to delay
 
                 Cursor = Cursors.WaitCursor;
-                if (axCZKEM1.ACUnlock(iMachineNumber,iDelay))
+                if (axCZKEM1.ACUnlock(iMachineNumber, iDelay))
                 {
                     //MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
                 }
@@ -202,7 +202,7 @@ namespace TflmsW
                 int iDelay = Convert.ToInt32("0");//time to delay
 
                 Cursor = Cursors.WaitCursor;
-                if (axCZKEM1.ACUnlock(iMachineNumber,iDelay))
+                if (axCZKEM1.ACUnlock(iMachineNumber, iDelay))
                 {
                     //MessageBox.Show("ACUnlock, Dalay Seconds:" +iDelay.ToString(), "Success");
                 }
@@ -256,20 +256,20 @@ namespace TflmsW
 
         public void DeleteFile(string path)
         {
-           // 2、根据路径字符串判断是文件还是文件夹
-           FileAttributes attr = File.GetAttributes(path);
-           // 3、根据具体类型进行删除
-           if (attr == FileAttributes.Directory)
-           {
-               // 3.1、删除文件夹
-               Directory.Delete(path, true);
-           }
-           else
-           {
-               // 3.2、删除文件
-               File.Delete(path);
-           }
-           File.Delete(path);
+            // 2、根据路径字符串判断是文件还是文件夹
+            FileAttributes attr = File.GetAttributes(path);
+            // 3、根据具体类型进行删除
+            if (attr == FileAttributes.Directory)
+            {
+                // 3.1、删除文件夹
+                Directory.Delete(path, true);
+            }
+            else
+            {
+                // 3.2、删除文件
+                File.Delete(path);
+            }
+            File.Delete(path);
 
         }
 
@@ -303,18 +303,19 @@ namespace TflmsW
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // 置顶和取消置顶
-            if(e.KeyCode == Keys.Q)
+            if (e.KeyCode == Keys.Q)
             {
                 this.TopMost = !this.TopMost;
             }
 
             // 窗体边框
-            if(e.KeyCode == Keys.B)
+            if (e.KeyCode == Keys.B)
             {
-                if(this.FormBorderStyle == FormBorderStyle.Sizable)
+                if (this.FormBorderStyle == FormBorderStyle.Sizable)
                 {
                     this.FormBorderStyle = FormBorderStyle.None;
-                } else
+                }
+                else
                 {
                     this.Width = 800;
                     this.Height = 600;
@@ -326,9 +327,9 @@ namespace TflmsW
             }
 
             // 窗体最大化
-            if(e.KeyCode == Keys.M)
+            if (e.KeyCode == Keys.M)
             {
-                if(this.FormBorderStyle == FormBorderStyle.None)
+                if (this.FormBorderStyle == FormBorderStyle.None)
                 {
                     this.Width = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
                     this.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
@@ -338,14 +339,13 @@ namespace TflmsW
             }
 
             // 测试图片
-            if(e.KeyCode == Keys.T)
+            if (e.KeyCode == Keys.T)
             {
                 //AddPictureBox(0, 0);
-                MessageBox.Show("开机");
-                IntPtr itbtn = FindWindowEx(hwnd, IntPtr.Zero, "TButton", "开机");
-                //SendMessage(itbtn, WM_SETTEXT, IntPtr.Zero, "嗯 挺好的");
+                IntPtr subWindow = FindWindowEx(hwnd, IntPtr.Zero, null, "");
+                IntPtr itbtn = FindWindowEx(subWindow, IntPtr.Zero, null, "开机");
                 SetForegroundWindow(itbtn);
-                SendMessage(itbtn, 0x, IntPtr.Zero, null);
+                SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
                 SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
             }
 
@@ -353,9 +353,8 @@ namespace TflmsW
             if (e.KeyCode == Keys.E)
             {
                 //AddPictureBox(0, 0);
-                MessageBox.Show("关机");
-                IntPtr itbtn = FindWindowEx(hwnd, IntPtr.Zero, "TButton", "关机");
-                //SendMessage(itbtn, WM_SETTEXT, IntPtr.Zero, "嗯 挺好的");
+                IntPtr subWindow = FindWindowEx(hwnd, IntPtr.Zero, null, "");
+                IntPtr itbtn = FindWindowEx(subWindow, IntPtr.Zero, null, "关机");
                 SetForegroundWindow(itbtn);
                 SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
                 SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);

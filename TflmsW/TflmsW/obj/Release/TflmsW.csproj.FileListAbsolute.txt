@@ -10,3 +10,4 @@ E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csproj.GenerateResource.cache
 E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csproj.CoreCompileInputs.cache
 E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.exe
 E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.pdb
+E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csprojAssemblyReference.cache
