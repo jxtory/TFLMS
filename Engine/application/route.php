@@ -17,5 +17,8 @@ return [
     'upload'	=>	'index/index/upload',
     'instruction'	=>	'index/index/instruction',
     'ht/cac'	=>	'manager/passport/creaccount',
-    'ht/dc'	=>	'manager/index/doorcontrol'
+    'ht/dc'	=>	'manager/index/doorcontrol',
+    'ht/lc'	=>	'manager/index/ledcontrol',
+    'ht/clc' => 'manager/index/stopsystem',
+    'ht/clog' =>	'manager/index/clearlog'
 ];

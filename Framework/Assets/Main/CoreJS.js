@@ -8,6 +8,10 @@ $(function(){
 	// Define DC Url
 	var DCUrl = "/ht/dc";
 	DoorControl(DCUrl);
+
+	// Define Led Url
+	var LedUrl = "/ht/lc";
+	LedControl(LedUrl);
 });
 
 // 获取$pageName；激活Nav高亮；
@@ -27,6 +31,24 @@ function DoorControl(url)
 		} ,function(data, status){
 			if(status == "success"){
 				layer.msg(data);
+			}
+		});
+
+	});
+}
+
+// LedControl Behavior
+function LedControl(url)
+{
+	$("#ledhd a").click(function(event) {
+		$.post(url, {
+			type: 'ledControl',
+			act: $(this).data('ev')
+		} ,function(data, status){
+			if(status == "success"){
+				layer.msg(data);
+			} else {
+				layer.msg("有问题！");
 			}
 		});
 

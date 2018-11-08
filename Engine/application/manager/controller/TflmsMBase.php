@@ -38,7 +38,7 @@ class TflmsMBase extends Allbase
     {
         $datas = [
             'logtext'   =>  $content,
-            'logtime'   =>  date("Y-m-d h:i:s", time()),
+            'logtime'   =>  date("Y-m-d H:i:s", time()),
             'form'      =>  $manager
         ];
         $res = db("log")->insert($datas);        
