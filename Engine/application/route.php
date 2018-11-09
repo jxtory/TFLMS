@@ -20,5 +20,6 @@ return [
     'ht/dc'	=>	'manager/index/doorcontrol',
     'ht/lc'	=>	'manager/index/ledcontrol',
     'ht/clc' => 'manager/index/stopsystem',
-    'ht/clog' =>	'manager/index/clearlog'
+    'ht/clog' =>    'manager/index/clearlog',
+    'ht/ic' =>	'manager/index/invitationcontrol'
 ];

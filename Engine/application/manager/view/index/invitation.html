@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<title>后台管理系统·{$pageName|default="后台主页"}</title>
+{include file="Index@Common/meta" /}
+{include file="Index@Common/header" /}
+</head>
+<body>
+	{include file="Common/nav" /}
+	<div class="container text-center">
+		<div class"row">
+			<div class="row">
+				<form class="form-inline" role="form" method="post" action="addCompany.html">
+				  <div class="form-group">
+				    <label class="sr-only" for="company">添加公司</label>
+				    <input type="text" class="form-control" name="company" placeholder="添加公司">
+				  </div>
+				  <button type="submit" class="btn btn-default">确定</button>
+				</form>
+			</div>
+			<div class="row"><hr></div>
+			<div class="row">
+				  <div class="form-inline">
+				    <input type="text" class="form-control" name="serch" placeholder="公司搜索">
+				    <label for="serch">查 询</label>
+				  </div>
+				</form>
+			</div>
+			<div class="row"><hr></div>
+		</div>
+	</div>
+	<div class="container text-center" id="invitatehd">
+		<div class="row">
+			<div class="col-xs-1"><h5><strong>ID</strong></h5></div>
+			<div class="col-xs-4"><h5><strong>公司名称</strong></h5></div>
+			<div class="col-xs-2"><h5><strong>邀请码</strong></h5></div>
+			<div class="col-xs-1"><h5><strong>有效期</strong></h5></div>
+			<div class="col-xs-4"><h5><strong>管理</strong></h5></div>
+		</div>
+		<div class="row"><hr></div>
+		{volist name="companys" id="company"}
+			<div class="row">
+				<div class="col-xs-1">{$company['id']}</div>
+				<div class="col-xs-4">{$company['company']}</div>
+				<div class="col-xs-2">{$company['invitecode']}</div>
+				<div class="col-xs-1">{$company['invitecodelifetime']}</div>
+				<div class="col-xs-4">
+					<p>
+						<a href="javascript: void(0);" data-ev="CreIc" data-cid="{$company['id']}">生成邀请码</a>
+					</p>
+					{if condition="$company['invitecode'] neq '' "}
+					<p>
+						<a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" data-cid="{$company['id']}" data-clipboard-text="您的邀请码是：{$company['invitecode']};请打开 led.tqcen.com 上传内容.">复制信息</a>
+					</p>
+					<p>
+						<a href="javascript: void(0);" data-ev="Delay" data-cid="{$company['id']}">延长一天</a>
+					</p>
+					<p>
+						<a href="javascript: void(0);" data-ev="UnIc" data-cid="{$company['id']}">取消邀请</a>						
+					</p>
+					{/if}
+					<p>
+						<a href="javascript: void(0);" data-ev="PassID" data-cid="{$company['id']}">删除公司</a>						
+					</p>
+				</div>
+			</div>
+			<div class="row"><hr></div>
+		{/volist}
+		{$companys->render()}
+	</div>
+	{include file="Index@Common/footer" /}
+	{include file="Index@Common/js" /}
+
+</body>
+</html>

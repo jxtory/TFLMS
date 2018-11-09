@@ -139,6 +139,30 @@ namespace TflmsW
 
             }
 
+            // 屏幕开机
+            if (File.Exists(appPath + "/led_open"))
+            {
+                DeleteFile(appPath + "/led_open");
+                IntPtr subWindow = FindWindowEx(hwnd, IntPtr.Zero, null, "");
+                IntPtr itbtn = FindWindowEx(subWindow, IntPtr.Zero, null, "开机");
+                SetForegroundWindow(itbtn);
+                SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
+                SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
+
+            }
+
+            // 屏幕关机
+            if (File.Exists(appPath + "/led_close"))
+            {
+                DeleteFile(appPath + "/led_close");
+                IntPtr subWindow = FindWindowEx(hwnd, IntPtr.Zero, null, "");
+                IntPtr itbtn = FindWindowEx(subWindow, IntPtr.Zero, null, "关机");
+                SetForegroundWindow(itbtn);
+                SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
+                SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
+
+            }
+
             // 一键开门
             if (File.Exists(appPath + "/opendoor"))
             {
@@ -234,7 +258,6 @@ namespace TflmsW
             DeleteFiles("app_max");
             DeleteFiles("led_open");
             DeleteFiles("led_close");
-            DeleteFiles("led_fix");
             DeleteFiles("opendoor");
             DeleteFiles("opendoor15");
             DeleteFiles("closedoor");
@@ -342,22 +365,6 @@ namespace TflmsW
             if (e.KeyCode == Keys.T)
             {
                 //AddPictureBox(0, 0);
-                IntPtr subWindow = FindWindowEx(hwnd, IntPtr.Zero, null, "");
-                IntPtr itbtn = FindWindowEx(subWindow, IntPtr.Zero, null, "开机");
-                SetForegroundWindow(itbtn);
-                SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
-                SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
-            }
-
-            // 测试图片
-            if (e.KeyCode == Keys.E)
-            {
-                //AddPictureBox(0, 0);
-                IntPtr subWindow = FindWindowEx(hwnd, IntPtr.Zero, null, "");
-                IntPtr itbtn = FindWindowEx(subWindow, IntPtr.Zero, null, "关机");
-                SetForegroundWindow(itbtn);
-                SendMessage(itbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
-                SendMessage(itbtn, WM_LBUTTONUP, IntPtr.Zero, null);
             }
 
             // 测试图片

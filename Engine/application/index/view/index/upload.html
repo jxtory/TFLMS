@@ -7,6 +7,38 @@
 </head>
 <body>
 	{include file="Common/nav" /}
+	<div class="container">
+		<div class="row">
+			<h3>请验证邀请码：</h3>			
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="well">
+				
+			<form class="form-horizontal" role="form" method="post" action="upload.html">
+				<div class="form-group">
+					<label for="upkey" class="col-sm-2 control-label">邀请码</label>
+					<div class="col-sm-10">
+						<input type="text" name="upkey" class="form-control" id="upkey" 
+							   placeholder="请输入邀请码">
+							   <a href="javascript: layer.msg('请联系四分之三活动负责人。');">忘记邀请码</a>
+							   <a href="javascript: layer.msg('请联系四分之三活动负责人。');">没有邀请码</a>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10 text-center">
+						<button type="submit" class="btn btn-default">验 证</button>
+					</div>
+
+				</div>
+
+			</form>			
+			</div>
+		</div>
+	</div>
 	{include file="Common/footer" /}
 	{include file="Common/js" /}
 </body>

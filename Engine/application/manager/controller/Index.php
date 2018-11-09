@@ -10,6 +10,94 @@ class Index extends TflmsMBase
     	return $this->fetch();
     }
 
+    // 邀请管理
+    public function invitation()
+    {
+        // 公司信息
+        $companys = db("invitation")->order("id desc")->paginate(15);
+        $this->assign("companys", $companys);
+
+        $this->SetPageName("邀请信息");
+        return $this->fetch();
+    }
+
+    // 邀请管理控制器
+    public function invitationcontrol()
+    {
+        if((session('manager') == "Manager_AuthOk") && (strlen(session("manager_who")) > 0)){
+            if(request()->isPost()){
+                if(input("post.type") == "invitateControl"){
+                    $datas = input("post.");
+                    $who = session("manager_who");
+                    $companyName = db("invitation")->where('id', $datas['cid'])->find()['company'];
+                    unset($datas['type']);
+                    switch ($datas['act'])
+                    {
+                    case "CreIc":
+                        $data = [
+                            'invitecode'            =>  $this->GetInviteCode(),
+                            'invitecodelifetime'    =>  date("Y-m-d H:i:s",time() + 60 * 60 * 24 *7)
+                        ];
+
+                        $res = db("invitation")->where('id', $datas['cid'])->insert($data);
+                        if($res){
+                            $this->wLog("[管理行为]为公司-{$companyName}-生成了邀请码", $who);
+                            return "操作成功！";
+                        }
+                        break;
+                    case "PassID":
+                        $res = db("invitation")->where('id', $datas['cid'])->delete();
+                        if($res){
+                            $this->wLog("[管理行为]删除公司-{$companyName}", $who);
+                            return "操作成功！";
+                        }
+                        break;
+                    default:
+                        return "操作失败！行为异常！0";
+                    }
+                    return "操作失败！";
+                } else {
+                    return "操作失败！";
+                }
+            }
+        } else {
+            return "Error!";
+        }
+
+        return "Error!";
+    }
+
+    // 添加公司
+    public function addCompany()
+    {
+        $nowUser = session("manager_who");
+
+        if(request()->isPost()){
+            $datas = input();
+            if(!strlen($datas['company']) > 0){
+                $this->error("公司名称不能为空！");
+            }
+            $checkIt = db("invitation")->where("company", $datas['company'])->find();
+            if(!$checkIt){
+                $data = [
+                    'company'       =>      $datas['company'],
+                ];
+                $creIt = db("invitation")->insert($data);
+                if($creIt == 1){
+                    $this->wLog("[管理行为] 添加了公司名称{$datas['company']}！", $nowUser);
+                    $this->success($datas['company'] . ", 添加成功！");
+                } else {
+                    $this->error("添加失败！");
+                }
+
+            } else {
+                $this->error("该公司已存在！");
+            }
+
+        }
+        return $this->error("无法添加");
+    }
+
     // 日志管理
     public function log()
     {
@@ -126,6 +214,8 @@ class Index extends TflmsMBase
                         if($this->CreControlKey("opendoor15")){return "操作成功！";}
                         break;
                     default:
+                        return "操作失败！行为异常！0";
+
                     }
                     return "操作失败！";
                 } else {
