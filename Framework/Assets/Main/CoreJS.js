@@ -130,3 +130,49 @@ function InvitationControl(url)
 
 	});
 }
+
+
+//判断客户端
+function isMobile() {
+    var userAgentInfo = navigator.userAgent;
+
+    var mobileAgents = [ "Android", "iPhone", "SymbianOS", "Windows Phone", "iPad","iPod"];
+
+    var mobile_flag = false;
+
+    //根据userAgent判断是否是手机
+    for (var v = 0; v < mobileAgents.length; v++) {
+        if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+            mobile_flag = true;
+            break;
+        }
+    }
+
+     var screen_width = window.screen.width;
+     var screen_height = window.screen.height;    
+
+     //根据屏幕分辨率判断是否是手机
+     if(screen_width < 500 && screen_height < 800){
+         mobile_flag = true;
+     }
+
+     return mobile_flag;
+}
+
+//判断设备是否是手机还是电脑
+function isMobileClient() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var agentinfo = null;
+    for(var i = 0; i < Agents.length; i++) {
+        if(userAgentInfo.indexOf(Agents[i]) > 0) {
+            agentinfo = userAgentInfo;
+            break;
+        }
+    }
+    if(agentinfo) {
+        return true;
+    } else {
+        return false;
+    }
+}

@@ -23,9 +23,32 @@
 	{include file="Index@Common/footer" /}
 	{include file="Index@Common/js" /}
 	<script>
-		// Tips
-		layer.tips('点此展开菜单', '#navcal', {
-		  tips: [4, '#999']
+		//判断设备是否是手机还是电脑
+		function isMobileClient() {
+		    var userAgentInfo = navigator.userAgent;
+		    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+		    var agentinfo = null;
+		    for(var i = 0; i < Agents.length; i++) {
+		        if(userAgentInfo.indexOf(Agents[i]) > 0) {
+		            agentinfo = userAgentInfo;
+		            break;
+		        }
+		    }
+		    if(agentinfo) {
+		        return true;
+		    } else {
+		        return false;
+		    }
+		}
+		$(function(){
+
+			if(isMobileClient())
+			{
+				// Tips
+				layer.tips('点此展开菜单', '#navcal', {
+				  tips: [4, '#999']
+				});
+			}
 		});
 	
 	</script>
