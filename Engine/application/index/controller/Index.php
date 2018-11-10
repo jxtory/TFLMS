@@ -19,6 +19,12 @@ class Index extends TflmsBase
             foreach ($files as $file) {
                 $mUR = 'myUploadRule';
                 $info = $file->rule($mUR)->move($this->upPath);
+                $data = [
+                    'fileUrl'       =>  $info->getSaveName(),
+                    'fileType'      =>  'UPFILE',
+                    'carousel'      =>  0
+                ]
+                db('files')->insert($data, true);
             }
 
             if($info){

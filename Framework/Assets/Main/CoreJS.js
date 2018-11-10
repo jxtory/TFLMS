@@ -66,6 +66,7 @@ function InvitationControl(url)
 		if($(this).data('ev') == "GetInfo"){
 			//JS里指定复制的内容
 			var clipboard = new Clipboard('.GetInfo');
+			clipboard.destory();
 			layer.msg("已复制到剪切板");
 			return;
 		}

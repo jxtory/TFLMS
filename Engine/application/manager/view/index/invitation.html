@@ -42,13 +42,21 @@
 			<div class="row">
 				<div class="col-xs-1">{$company['id']}</div>
 				<div class="col-xs-4">{$company['company']}</div>
-				<div class="col-xs-2">{$company['invitecode']|default="未授权"}</div>
+				<div class="col-xs-2">
+					{if condition="$company['invitecode'] neq '' "}
+						<a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" style="color: #00c;" data-clipboard-text="{$company['invitecode']}">
+							{$company['invitecode']}
+						</a>
+						{else /}
+						<span style="color: #c00;">未授权</span>
+					{/if}
+				</div>
 				<div class="col-xs-1">{$company['invitecodelifetime']|default="无"}</div>
 				<div class="col-xs-4">
 					<p>
 						<a href="javascript: void(0);" data-ev="CreIc" data-cid="{$company['id']}">生成邀请码</a>
 					</p>
-					{if condition="$company['invitecode'] neq '' "}
+					{if condition="$company['invitecode'] neq ''"}
 					<p>
 						<a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" data-cid="{$company['id']}" data-clipboard-text="您的邀请码是：{$company['invitecode']};请打开 led.tqcen.com 上传内容.">复制信息</a>
 					</p>

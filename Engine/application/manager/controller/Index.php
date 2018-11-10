@@ -34,8 +34,12 @@ class Index extends TflmsMBase
                     switch ($datas['act'])
                     {
                     case "CreIc":
+                        do {
+                            $invitecode = $this->GetInviteCode();
+                        } while (db('invitation')->where("invitecode", $invitecode)->find() != null);
+
                         $data = [
-                            'invitecode'            =>  $this->GetInviteCode(),
+                            'invitecode'            =>  $invitecode,
                             'invitecodelifetime'    =>  date("Y-m-d H:i:s",time() + 60 * 60 * 24 * 5)
                         ];
 
