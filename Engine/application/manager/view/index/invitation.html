@@ -21,7 +21,7 @@
 			<div class="row"><hr></div>
 			<div class="row">
 				  <div class="form-inline">
-				    <input type="text" class="form-control" name="serch" placeholder="公司搜索">
+				    <input type="text" class="form-control" id="cp_serch" name="cp_serch" placeholder="公司搜索">
 				    <label for="serch">查 询</label>
 				  </div>
 				</form>
@@ -29,7 +29,7 @@
 			<div class="row"><hr></div>
 		</div>
 	</div>
-	<div class="container text-center" id="invitatehd">
+	<div class="container text-center fixed">
 		<div class="row">
 			<div class="col-xs-1"><h5><strong>序号</strong></h5></div>
 			<div class="col-xs-4"><h5><strong>公司名称</strong></h5></div>
@@ -38,6 +38,9 @@
 			<div class="col-xs-4"><h5><strong>管理</strong></h5></div>
 		</div>
 		<div class="row"><hr></div>
+	</div>
+	<div class="container text-center invitatehd" id="invitatehd"></div>
+	<div class="container text-center invitatehd" id="curPage">
 		{volist name="companys" id="company"}
 			<div class="row">
 				<div class="col-xs-1">{$company['id']}</div>
@@ -51,7 +54,18 @@
 						<span style="color: #c00;">未授权</span>
 					{/if}
 				</div>
-				<div class="col-xs-1">{$company['invitecodelifetime']|default="无"}</div>
+				<div class="col-xs-1">
+					{if condition="$company['invitecodelifetime'] neq '' "}
+						{if condition="strtotime($company['invitecodelifetime']) > time()"}
+						<span>{$company['invitecodelifetime']}</span>
+						{else /}
+							<span style="color: #c00;">已过期</span>
+						{/if}
+					{else /}
+						<span>无</span>
+					{/if}
+					<!-- {$company['invitecodelifetime']|default="无"} -->
+				</div>
 				<div class="col-xs-4">
 					<p>
 						<a href="javascript: void(0);" data-ev="CreIc" data-cid="{$company['id']}">生成邀请码</a>
@@ -74,8 +88,11 @@
 			</div>
 			<div class="row"><hr></div>
 		{/volist}
+	</div>
+	<div class="container text-center fixed_page">
 		{$companys->render()}
 	</div>
+
 	{include file="Index@Common/footer" /}
 	{include file="Index@Common/js" /}
 

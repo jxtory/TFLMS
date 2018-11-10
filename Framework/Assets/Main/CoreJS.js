@@ -16,6 +16,7 @@ $(function(){
 	// Define IC Url
 	var IcUrl = "/ht/ic";
 	InvitationControl(IcUrl);
+
 });
 
 // 获取$pageName；激活Nav高亮；
@@ -62,7 +63,47 @@ function LedControl(url)
 // Invitation Behavior
 function InvitationControl(url)
 {
-	$("#invitatehd a").click(function(event) {
+	$("#cp_serch").bind("input propertychange", function(){
+		// layer.msg($("#cp_serch").val());
+		if($("#cp_serch").val() != ""){
+		// if($("#cp_serch").val() != "" || $("#cp_serch").val() != null || $("#cp_serch").val() != "undefined"){
+		    $("#curPage").hide();
+		    $(".fixed_page").hide();
+		} else {
+		    $("#curPage").show();
+		    $(".fixed_page").show();
+		}
+
+	    $.post(
+	            "invitation.html",
+	            {
+	                type: "getInvitation",
+	                content: function(){return $("#cp_serch").val();}
+	            },
+	            function(data, status){
+	                // $("#invitatehd").html("");
+	                if(status == "success" && data != ""){
+	                    for(v in data){
+	                        // var content = "<tr>";
+	                        // content += "<td>" + data[v]['id'] + "</td>";
+	                        // content += "<td>" + data[v]['an'] + "</td>";
+	                        // content += "<td>" + data[v]['personnel'] + "</td>";
+	                        // content += "<td>" + data[v]['grant_date'] + "</td>";
+	                        // content += "<td>" + data[v]['components'] + "</td>";
+	                        // content += '<td><a href="javascript: void(0);" class="btn btn-blue btn-xs" data-hid="' + data[v]['id'] + '">回收</a></td>';
+	                        // content += "</tr>";
+	                        // $("#getHoldersInfo tbody").html($("#getHoldersInfo tbody").html() + content);
+
+	                    }
+	                } else {
+
+	                }
+	            }
+	        );
+
+	});
+
+	$(".invitatehd a").click(function(event) {
 		if($(this).data('ev') == "GetInfo"){
 			//JS里指定复制的内容
 			var clipboard = new Clipboard('.GetInfo');
