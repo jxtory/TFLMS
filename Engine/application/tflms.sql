@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: tflms
 Target Host: localhost
 Target Database: tflms
-Date: 2018/11/9 19:58:35
+Date: 2018/11/10 19:35:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -17,6 +17,17 @@ CREATE TABLE `tflms_account` (
   `password` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tflms_files
+-- ----------------------------
+CREATE TABLE `tflms_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fileUrl` varchar(255) NOT NULL,
+  `fileType` varchar(30) DEFAULT NULL,
+  `Carousel` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for tflms_invitation
