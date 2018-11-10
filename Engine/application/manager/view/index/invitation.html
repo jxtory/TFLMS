@@ -31,7 +31,7 @@
 	</div>
 	<div class="container text-center" id="invitatehd">
 		<div class="row">
-			<div class="col-xs-1"><h5><strong>ID</strong></h5></div>
+			<div class="col-xs-1"><h5><strong>序号</strong></h5></div>
 			<div class="col-xs-4"><h5><strong>公司名称</strong></h5></div>
 			<div class="col-xs-2"><h5><strong>邀请码</strong></h5></div>
 			<div class="col-xs-1"><h5><strong>有效期</strong></h5></div>
@@ -42,8 +42,8 @@
 			<div class="row">
 				<div class="col-xs-1">{$company['id']}</div>
 				<div class="col-xs-4">{$company['company']}</div>
-				<div class="col-xs-2">{$company['invitecode']}</div>
-				<div class="col-xs-1">{$company['invitecodelifetime']}</div>
+				<div class="col-xs-2">{$company['invitecode']|default="未授权"}</div>
+				<div class="col-xs-1">{$company['invitecodelifetime']|default="无"}</div>
 				<div class="col-xs-4">
 					<p>
 						<a href="javascript: void(0);" data-ev="CreIc" data-cid="{$company['id']}">生成邀请码</a>

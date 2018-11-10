@@ -36,12 +36,35 @@ class Index extends TflmsMBase
                     case "CreIc":
                         $data = [
                             'invitecode'            =>  $this->GetInviteCode(),
-                            'invitecodelifetime'    =>  date("Y-m-d H:i:s",time() + 60 * 60 * 24 *7)
+                            'invitecodelifetime'    =>  date("Y-m-d H:i:s",time() + 60 * 60 * 24 * 5)
                         ];
 
-                        $res = db("invitation")->where('id', $datas['cid'])->insert($data);
+                        $res = db("invitation")->where('id', $datas['cid'])->update($data);
                         if($res){
                             $this->wLog("[管理行为]为公司-{$companyName}-生成了邀请码", $who);
+                            return "操作成功！";
+                        }
+                        break;
+                    case "Delay":
+                        $data = [
+                            'invitecodelifetime'    =>  date("Y-m-d H:i:s", (strtotime(db("invitation")->where('id', $datas['cid'])->find()['invitecodelifetime']) + 60 * 60 * 24))
+                        ];
+
+                        $res = db("invitation")->where('id', $datas['cid'])->update($data);
+                        if($res){
+                            $this->wLog("[管理行为]为公司-{$companyName}-延长时间1天", $who);
+                            return "操作成功！";
+                        }
+                        break;
+                    case "UnIc":
+                        $data = [
+                            'invitecode'            =>  "",
+                            'invitecodelifetime'    =>  null
+                        ];
+
+                        $res = db("invitation")->where('id', $datas['cid'])->update($data);
+                        if($res){
+                            $this->wLog("[管理行为]为公司-{$companyName}-取消了邀请授权", $who);
                             return "操作成功！";
                         }
                         break;
