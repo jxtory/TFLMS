@@ -8,10 +8,52 @@ class Index extends TflmsBase
         // 渲染首页
         return $this->fetch();
     }
+
+    // 上传控制器
+    public function upcontrol()
+    {
+        if(request()->isPost()){
+            // 文件上传处理
+            $files = request()->file();
+
+            foreach ($files as $file) {
+                $mUR = 'myUploadRule';
+                $info = $file->rule($mUR)->move($this->upPath);
+            }
+
+            if($info){
+                return "上传成功!";
+            }
+
+        }
+
+        // 验证页面
+        if(request()->isGet()){
+            $cid = input("cid");
+            $datas = db('invitation')->where('id', $cid)->find();
+            if(strtotime($datas['invitecodelifetime']) > time()){
+                $this->assign("cinfo", $datas);
+                return $this->fetch();
+            } else {
+                return $this->error("邀请码已过期", "/");
+            }
+        }
+        $this->error("Error", "/");
+    }
     
     // >内容上传
     public function upload()
     {
+        if(request()->isPost()){
+            $upkey = input("post.upkey");
+            $checkIt = db("invitation")->where("invitecode", $upkey)->find();
+            if($checkIt){
+                $this->success("验证成功", url('/up', ['cid' => $checkIt['id']]));
+            } else {
+                $this->error("验证失败");
+            }
+        }
+
         $this->SetPageName("内容上传");
     	return $this->fetch("upload");
     }

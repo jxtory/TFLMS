@@ -2,12 +2,10 @@
 /Engine/*
 
 # 一些框架
-/framework/assets/huiadmin/*
-/framework/assets/Ueditor/*
+/framework/assets/Tools/*
 
 # 上传中心
-/uploadcenter
-/ueditor
+/tqupload
 /video
 
 # 配置目录

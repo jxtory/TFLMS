@@ -24,7 +24,8 @@ function mkdirs($dir, $mode = 0777)
 // 上传文件命名规则
 function myUploadRule()
 {
-	return date('Ymd') . md5(microtime(true));
+	return date('YmdHis');
+	// return date('Ymd') . md5(microtime(true));
 }
 
 // 查找Banner文件夹下所有文件

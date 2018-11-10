@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<title>四分之三·{$pageName|default="大屏自助系统"}</title>
+{include file="Common/meta" /}
+{include file="Common/header" /}
+<link href="~wup~/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	{include file="Common/nav" /}
+	<div class="container">
+		<div class="row">
+			<h3>{$cinfo['company']}</h3>			
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="well">
+				<div class="row"><h4>公司名称：{$cinfo['company']}</h4></div>
+				<div class="row"><h4>邀请码：{$cinfo['invitecode']}</h4></div>
+				<div class="row"><h4>邀请码有效期：{$cinfo['invitecodelifetime']}</h4></div>
+				<form class="form form-horizontal" id="form-article-add">
+					<div class="row">
+						<label class="form-label col-xs-4 col-sm-2">
+							<span class="c-red">*</span>
+							上传文件：</label>
+						<div class="formControls col-xs-8 col-sm-9">
+							<div id="uploader">
+							    <div id="fileList" class="uploader-list"></div>
+							    <div id="filePicker">选择文件</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	{include file="Common/footer" /}
+	{include file="Common/js" /}
+	<script type="text/javascript" src="~wup~/webuploader/0.1.5/webuploader.min.js"></script> 
+	<script>
+	$(function(){
+		$list = $("#fileList");
+		// 初始化Web Uploader
+		var uploader = WebUploader.create({
+
+		    // 选完文件后，是否自动上传。
+		    auto: true,
+
+		    // swf文件路径
+			swf: '~wup~/webuploader/0.1.5/Uploader.swf',
+
+		    // 文件接收服务端。
+			server: '/up',
+
+		    // 选择文件的按钮。可选。
+		    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+		    // pick: '#filePicker',
+		    pick: {
+		                    id: '#filePicker',
+		                    multiple:false, 
+		                },
+		    fileNumLimit: 1,
+
+		    // 只允许选择图片文件。
+		    accept: {
+		        title: '图像或视频',
+		        extensions: 'gif,jpg,jpeg,bmp,png,mp4,mov,avi',
+		        mimeTypes: '*/*'
+		    }
+		});
+
+		// 当有文件添加进来的时候
+		uploader.on( 'fileQueued', function( file ) {
+		    var $li = $(
+		            '<div id="' + file.id + '" class="file-item thumbnail">' +
+		                '<img>' +
+		                '<div class="info">' + file.name + '</div>' +
+		            '</div>'
+		            ),
+		        $img = $li.find('img');
+
+
+		    // $list为容器jQuery实例
+		    $list.append( $li );
+
+		    // 创建缩略图
+		    // 如果为非图片文件，可以不用调用此方法。
+		    // thumbnailWidth x thumbnailHeight 为 100 x 100
+		    thumbnailWidth = 110;
+		    thumbnailHeight = 110;
+
+		    uploader.makeThumb( file, function( error, src ) {
+		        if ( error ) {
+		            $img.replaceWith('<span>不能预览</span>');
+		            return;
+		        }
+
+		        $img.attr( 'src', src );
+		    }, thumbnailWidth, thumbnailHeight );
+		});
+
+		// 文件上传过程中创建进度条实时显示。
+		uploader.on( 'uploadProgress', function( file, percentage ) {
+		    var $li = $( '#'+file.id ),
+		        $percent = $li.find('.progress span');
+
+		    // 避免重复创建
+		    if ( !$percent.length ) {
+		        $percent = $('<p class="progress"><span></span></p>')
+		                .appendTo( $li )
+		                .find('span');
+		    }
+
+		    $percent.css( 'width', percentage * 100 + '%' );
+		});
+
+		// 文件上传成功，给item添加成功class, 用样式标记上传成功。
+		uploader.on( 'uploadSuccess', function( file ) {
+		    $( '#'+file.id ).addClass('upload-state-done');
+		    layer.msg("文件上传完成");
+		    setTimeout(function(){
+		    	location.replace(location.href);
+		    },3000); 
+
+		});
+
+		// 文件上传失败，显示上传出错。
+		uploader.on( 'uploadError', function( file ) {
+		    var $li = $( '#'+file.id ),
+		        $error = $li.find('div.error');
+
+		    // 避免重复创建
+		    if ( !$error.length ) {
+		        $error = $('<div class="error"></div>').appendTo( $li );
+		    }
+
+		    $error.text('上传失败');
+		});
+
+		// 完成上传完了，成功或者失败，先删除进度条。
+		uploader.on( 'uploadComplete', function( file ) {
+		    $( '#'+file.id ).find('.progress').remove();
+		});
+
+	});
+		
+	</script>
+
+</body>
+</html>

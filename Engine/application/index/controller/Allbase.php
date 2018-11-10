@@ -12,6 +12,9 @@ class Allbase extends Controller
     public $appName = "四分之三·区块链全球商业中心(大屏幕管理系统)";
     // >页面名称
     public $pageName = "";
+    // Path
+    protected $upPath = "tqupload";
+
     public function _initialize()
     {
         // 通用初始化
@@ -21,7 +24,7 @@ class Allbase extends Controller
         $this->SetPageName("");
         
         // 创建上传中心目录
-        // mkdirs("");
+        mkdirs($this->upPath);
 
         // 创建配置目录
         // mkdirs("config");                       // 配置目录

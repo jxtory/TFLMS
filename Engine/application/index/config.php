@@ -12,6 +12,7 @@
 return [
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-    	'~CoreJS~'	=>	'/framework/assets/main'
+    	'~CoreJS~'	=>	'/framework/assets/main',
+    	'~wup~'		=>	'/framework/assets/Tools'
 	],
 ];
