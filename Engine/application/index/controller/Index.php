@@ -28,26 +28,31 @@ class Index extends TflmsBase
         }
 
         // 验证页面
-        if(request()->isGet()){
+        if(request()->isGet() && session("UploadAuth") == "Allow"){
             $cid = input("cid");
             $datas = db('invitation')->where('id', $cid)->find();
-            if(strtotime($datas['invitecodelifetime']) > time()){
+            if(session("Uploader") == $cid && strtotime($datas['invitecodelifetime']) > time()){
                 $this->assign("cinfo", $datas);
                 return $this->fetch();
             } else {
                 return $this->error("邀请码已过期", "/");
             }
         }
-        $this->error("Error", "/");
+        $this->error("发生了一个严重的错误", "/");
     }
     
     // >内容上传
     public function upload()
     {
+        // 验证归零
+        session("UploadAuth", "Disallow");
+        session("Uploader", "none");
         if(request()->isPost()){
             $upkey = input("post.upkey");
             $checkIt = db("invitation")->where("invitecode", $upkey)->find();
             if($checkIt){
+                session("UploadAuth", "Allow");
+                session("Uploader", $checkIt['id']);
                 $this->success("验证成功", url('/up', ['cid' => $checkIt['id']]));
             } else {
                 $this->error("验证失败");
