@@ -20,8 +20,9 @@ class Index extends TflmsBase
                 $mUR = 'myUploadRule';
                 $info = $file->rule($mUR)->move($this->upPath);
                 $data = [
+                    'cid'           =>  session("Uploader"),
                     'fileUrl'       =>  $info->getSaveName(),
-                    'fileType'      =>  'UPFILE',
+                    'fileType'      =>  explode(".", $info->getSaveName())[1],
                     'carousel'      =>  0
                 ];
                 db('files')->insert($data, true);
