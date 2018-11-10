@@ -23,7 +23,7 @@ class Index extends TflmsBase
                     'fileUrl'       =>  $info->getSaveName(),
                     'fileType'      =>  'UPFILE',
                     'carousel'      =>  0
-                ]
+                ];
                 db('files')->insert($data, true);
             }
 
