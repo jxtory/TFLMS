@@ -70,6 +70,7 @@ function InvitationControl(url)
 		    $("#curPage").hide();
 		    $(".fixed_page").hide();
 		} else {
+			$("invitatehd").html("");
 		    $("#curPage").show();
 		    $(".fixed_page").show();
 		}
@@ -81,18 +82,37 @@ function InvitationControl(url)
 	                content: function(){return $("#cp_serch").val();}
 	            },
 	            function(data, status){
-	                // $("#invitatehd").html("");
+	                $("#invitatehd").html("");
 	                if(status == "success" && data != ""){
 	                    for(v in data){
-	                        // var content = "<tr>";
-	                        // content += "<td>" + data[v]['id'] + "</td>";
-	                        // content += "<td>" + data[v]['an'] + "</td>";
-	                        // content += "<td>" + data[v]['personnel'] + "</td>";
-	                        // content += "<td>" + data[v]['grant_date'] + "</td>";
-	                        // content += "<td>" + data[v]['components'] + "</td>";
-	                        // content += '<td><a href="javascript: void(0);" class="btn btn-blue btn-xs" data-hid="' + data[v]['id'] + '">回收</a></td>';
-	                        // content += "</tr>";
-	                        // $("#getHoldersInfo tbody").html($("#getHoldersInfo tbody").html() + content);
+	                        var content = '<div class="row">';
+	                        content += '<div class="col-xs-1">' + data[v]['id'] + '</div>';
+	                        content += '<div class="col-xs-4">' + data[v]['company'] + '</div>';
+	                        if(data[v]['invitecode'] != "" && data[v]['invitecode'] != null){
+	                        	content += '<div class="col-xs-1"><a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" style="color: #00c;" data-clipboard-text="' + data[v]['invitecode'] + '">' + data[v]['invitecode'] + '</a></div>';
+	                        } else {
+								content += '<div class="col-xs-1"><span style="color: #c00;">未授权</span></div>';
+	                        }
+
+	                        if(data[v]['invitecodelifetime'] != ""  && data[v]['invitecodelifetime'] != null){
+	                        	var ctime = new Date(data[v]['invitecodelifetime']);
+	                        	var nowtime = new Date(new Date());
+	                        	if(ctime.getTime() > nowtime.getTime()){
+									content += '<div class="col-xs-2"><span>' + data[v]['invitecodelifetime'] + '</span></div>';
+	                        	} else {
+									content += '<div class="col-xs-2"><span style="color: #c00;">已过期</span></span></div>';
+	                        	}
+
+	                        } else {
+								content += '<div class="col-xs-2"><span>无</span></div>';
+	                        }
+
+	                        content += '<div class="col-xs-4">';
+	                        content += '<p><a href="javascript: void(0);" data-ev="CreIc" data-cid="' + data[v]['id'] + '">生成邀请码</a></p>';
+	                        content += '</div>';
+	                        content += '</div>';
+	                        content += '<div class="row"><hr></div>';
+	                        $("#invitatehd").html($("#invitatehd").html() + content);
 
 	                    }
 	                } else {
@@ -131,6 +151,31 @@ function InvitationControl(url)
 	});
 }
 
+$("#invitatehd").on('click', 'a',function(event) {
+	if($(event.target).data('ev') == "GetInfo"){
+		//JS里指定复制的内容
+		var clipboard = new Clipboard('.GetInfo');
+		layer.msg("已复制到剪切板");
+		return;
+	}
+
+	$.post("/ht/ic", {
+		type: 'invitateControl',
+		act: $(event.target).data('ev'),
+		cid: $(event.target).data('cid')
+	} ,function(data, status){
+		if(status == "success"){
+			layer.msg(data + "3秒后刷新！");
+			setTimeout(function(){
+				location.replace(location.href);
+			},3000); 
+
+		} else {
+			layer.msg("有问题！");
+		}
+	});
+	/* Act on the event */
+});
 
 //判断客户端
 function isMobile() {

@@ -13,12 +13,30 @@ class Index extends TflmsMBase
     // 邀请管理
     public function invitation()
     {
-        // 公司信息
-        $companys = db("invitation")->order("id desc")->paginate(15);
-        $this->assign("companys", $companys);
+        if(request()->isAjax()){
+            if(input('type') == "getInvitation"){
+                $search = input("content");
+                if($search){
+                    $datas = db("invitation")
+                        ->where("company","like", "%" . $search ."%")
+                        ->select();
+                    // 
+                    if($datas){
+                        return $datas;
+                    } else {
+                        return;
+                    }
+                }
+            }
+            return;
+        } else {
+            // 公司信息
+            $companys = db("invitation")->order("id desc")->paginate(15);
+            $this->assign("companys", $companys);
 
-        $this->SetPageName("邀请信息");
-        return $this->fetch();
+            $this->SetPageName("邀请信息");
+            return $this->fetch();
+        }
     }
 
     // 邀请管理控制器
