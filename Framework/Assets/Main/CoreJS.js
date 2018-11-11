@@ -109,6 +109,12 @@ function InvitationControl(url)
 
 	                        content += '<div class="col-xs-4">';
 	                        content += '<p><a href="javascript: void(0);" data-ev="CreIc" data-cid="' + data[v]['id'] + '">生成邀请码</a></p>';
+	                        if(data[v]['invitecode'] != "" && data[v]['invitecode'] != null){
+	                        	content += '<p><a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" data-cid="' + data[v]['id'] + '" data-clipboard-text="您的邀请码是：' + data[v]['invitecode'] + ';请打开 led.tqcen.com 上传内容.">复制信息</a></p>';
+	                        	content += '<p><a href="javascript: void(0);" data-ev="Delay" data-cid="' + data[v]['id'] + '">延长一天</a></p>';
+	                        	content += '<p><a href="javascript: void(0);" data-ev="UnIc" data-cid="' + data[v]['id'] + '">取消邀请</a></p>';
+	                        }
+                        	content += '<p><a href="javascript: void(0);" data-ev="PassID" data-cid="' + data[v]['id'] + '">删除公司</a></p>';
 	                        content += '</div>';
 	                        content += '</div>';
 	                        content += '<div class="row"><hr></div>';
@@ -131,6 +137,7 @@ function InvitationControl(url)
 			return;
 		}
 
+		$(this).parent().parent().hide();
 		$.post(url, {
 			type: 'invitateControl',
 			act: $(this).data('ev'),
@@ -159,6 +166,7 @@ $("#invitatehd").on('click', 'a',function(event) {
 		return;
 	}
 
+	$(event.target).parent().parent().hide();
 	$.post("/ht/ic", {
 		type: 'invitateControl',
 		act: $(event.target).data('ev'),
