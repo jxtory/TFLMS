@@ -12,7 +12,36 @@ class Index extends TflmsMBase
 
     public function file()
     {
-        return $this->fetch();
+        if(request()->isAjax()){
+            if(input('type') == "getInvitation"){
+                $search = input("content");
+                if($search){
+                    $datas = db("invitation")
+                        ->where("company","like", "%" . $search ."%")
+                        ->select();
+                    // 
+                    if($datas){
+                        return $datas;
+                    } else {
+                        return;
+                    }
+                }
+            }
+            return;
+        } else {
+            // 公司信息
+            $files = db('files a')
+                ->field("a.*, b.company")
+                ->join("invitation b", "b.id = a.cid")
+                ->order("id desc")
+                ->paginate(15);
+
+            $this->assign("files", $files);
+
+            $this->SetPageName("数据审核");
+            return $this->fetch();
+        }
+
     }
 
     // 邀请管理

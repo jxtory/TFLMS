@@ -10,8 +10,40 @@
 	<div class="container text-center">
 		<div class"row">
 			<h3>上传文件管理</h3>
+			<div class="row"><hr></div>
+			<div class="row">
+				  <div class="form-inline">
+				    <input type="text" class="form-control" id="cp_serch_file" name="cp_serch_file" placeholder="公司搜索">
+				    <label for="serch">查 询</label>
+				  </div>
+				</form>
+			</div>
+			<div class="row"><hr></div>
 		</div>
 	</div>
+	<div class="container text-center fixed">
+		<div class="row">
+			<div class="col-xs-1"><h5><strong>序号</strong></h5></div>
+			<div class="col-xs-3"><h5><strong>公司名称</strong></h5></div>
+			<div class="col-xs-6"><h5><strong>文件</strong></h5></div>
+			<div class="col-xs-2"><h5><strong>管理</strong></h5></div>
+		</div>
+		<div class="row"><hr></div>
+	</div>
+	<div class="container text-center filehd" id="filehd"></div>
+	<div class="container text-center filehd" id="curPage_File">
+		{volist name="files" id="file"}
+			<div class="row">
+				<div class="col-xs-1">{$file['id']}</div>
+				<div class="col-xs-3">{$file['company']}</div>
+			</div>
+			<div class="row"><hr></div>
+		{/volist}
+	</div>
+	<div class="container text-center fixed_page_File">
+		{$files->render()}
+	</div>
+
 	{include file="Index@Common/footer" /}
 	{include file="Index@Common/js" /}
 
