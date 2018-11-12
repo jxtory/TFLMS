@@ -10,6 +10,11 @@ class Index extends TflmsMBase
     	return $this->fetch();
     }
 
+    public function file()
+    {
+        return $this->fetch();
+    }
+
     // 邀请管理
     public function invitation()
     {

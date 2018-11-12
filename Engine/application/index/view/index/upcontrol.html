@@ -10,17 +10,17 @@
 	{include file="Common/nav" /}
 	<div class="container">
 		<div class="row">
-			<h3>{$cinfo['company']}</h3>			
+			<h3>Hi, {$cinfo['company']}：</h3>			
 		</div>
 	</div>
 
 	<div class="container">
 		<div class="row">
 			<div class="well">
-				<div class="row"><h4>公司名称：{$cinfo['company']}</h4></div>
-				<div class="row"><h4>邀请码：{$cinfo['invitecode']}</h4></div>
+				<div class="row"><h4>单位名称：{$cinfo['company']}</h4></div>
+				<div class="row"><h4>邀请码：<span class="text-success">{$cinfo['invitecode']}</span></h4></div>
 				<div class="row"><h4>邀请码有效期：{$cinfo['invitecodelifetime']}</h4></div>
-				<div class="row"><a class="btn btn-success" href="javascript:location.replace(location.href);">刷新<i class="glyphicon glyphicon-refresh"></i></a></div>
+				<div class="row">点此刷新：<a class="btn btn-success btn-sm" href="javascript:location.replace(location.href);">刷新<i class="glyphicon glyphicon-refresh"></i></a></div>
 				<div class="row"><hr></div>
 				<form class="form form-horizontal" id="form-article-add">
 					<div class="row cl">
