@@ -37,6 +37,7 @@ class Index extends TflmsMBase
                 ->paginate(15);
 
             $this->assign("files", $files);
+            $this->assign("filePath", $this->upPath);
 
             $this->SetPageName("数据审核");
             return $this->fetch();

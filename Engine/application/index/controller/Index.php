@@ -19,12 +19,13 @@ class Index extends TflmsBase
             foreach ($files as $file) {
                 $mUR = 'myUploadRule';
                 $info = $file->rule($mUR)->move($this->upPath);
+                $fileName = explode(".", $info->getSaveName());
 
                 if($info){
                     $data = [
                         'cid'           =>  session("Uploader"),
-                        'fileUrl'       =>  $info->getSaveName(),
-                        'fileType'      =>  explode(".", $info->getSaveName())[1],
+                        'fileUrl'       =>  $fileName[0],
+                        'fileType'      =>  $fileName[1],
                         'carousel'      =>  0
                     ];
                     $res = db('files')->insert($data, true);
@@ -36,13 +37,14 @@ class Index extends TflmsBase
                         $this->wLog("[用户行为]{$companyName}，上传了文件{$info->getSaveName()}，存储失败！");
                     }
 
-                    $newPic = $this->image_resize(file_get_contents($this->upPath . DS . $info->getSaveName()), 384, 216);
-                    $fileName = explode(".", $info->getSaveName());
+                    if(in_array($fileName[1], ['gif', 'jpg', 'jpeg', 'bmp', 'png'])){
+                        $newPic = $this->image_resize(file_get_contents($this->upPath . DS . $info->getSaveName()), 384, 216);
 
-                    if(file_put_contents($this->upPath . DS . $fileName[0] . "_thumb." . $fileName[1], $newPic)){
-                        $this->wLog("[系统行为]{$info->getSaveName()}，成功生成了缩略图。");
-                    } else {
-                        $this->wLog("[系统行为]{$info->getSaveName()}，成功缩略图失败了。");
+                        if(file_put_contents($this->upPath . DS . $fileName[0] . "_thumb." . $fileName[1], $newPic)){
+                            $this->wLog("[系统行为]{$info->getSaveName()}，成功生成了缩略图。");
+                        } else {
+                            $this->wLog("[系统行为]{$info->getSaveName()}，成功缩略图失败了。");
+                        }
                     }
 
                 } else {

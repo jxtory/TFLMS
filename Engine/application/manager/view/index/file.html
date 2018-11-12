@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="col-xs-1"><h5><strong>序号</strong></h5></div>
 			<div class="col-xs-3"><h5><strong>公司名称</strong></h5></div>
-			<div class="col-xs-6"><h5><strong>文件</strong></h5></div>
+			<div class="col-xs-6"><h5><strong>文件<span class="hidden-xs">(仅图像显示缩略图)</span></strong></h5></div>
 			<div class="col-xs-2"><h5><strong>管理</strong></h5></div>
 		</div>
 		<div class="row"><hr></div>
@@ -36,6 +36,13 @@
 			<div class="row">
 				<div class="col-xs-1">{$file['id']}</div>
 				<div class="col-xs-3">{$file['company']}</div>
+				<div class="col-xs-6">
+					{if condition="in_array($file['fileType'], ['png', 'jpg', 'jpeg', 'bmp', 'gif'])"}
+						<img class="img-thumbnail" src="/{$filePath}/{$file['fileUrl']}_thumb.{$file['fileType']}" alt="{$file['fileUrl']}">
+
+					{/if}
+
+				</div>
 			</div>
 			<div class="row"><hr></div>
 		{/volist}
