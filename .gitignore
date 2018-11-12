@@ -11,5 +11,14 @@
 # 配置目录
 /config
 
+# Key文件
+app_quit
+app_max
+led_open
+led_close
+opendoor
+opendoor15
+closedoor
+
 #忽略的内容
 !/Engine/application
