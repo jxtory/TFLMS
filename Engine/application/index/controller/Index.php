@@ -48,7 +48,6 @@ class Index extends TflmsBase
                 } else {
                     $this->wLog("[用户行为]{$companyName}，有文件上传失败");
                 }
-
             }
 
             if($info){
