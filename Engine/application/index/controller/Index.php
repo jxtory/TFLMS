@@ -5,23 +5,8 @@ use Intervention\Image\ImageManager;
 
 class Index extends TflmsBase
 {
-    public function pi()
-    {
-        echo phpinfo();
-        return;
-    }
     public function index()
     {
-
-        // create an image manager instance with favored driver
-        $manager = new ImageManager(array('driver' => 'imagick'));
-
-
-        // to finally create image instances
-        $image = $manager->make(file_get_contents("tqupload/1.jpg"))->resize(384, 216);
-        $image->save("2.jpg");
-        return;
-
         // 渲染首页
         return $this->fetch();
     }
@@ -55,9 +40,13 @@ class Index extends TflmsBase
                     }
 
                     if(in_array($fileName[1], ['gif', 'jpg', 'jpeg', 'bmp', 'png'])){
-                        $newPic = $this->image_resize(file_get_contents($this->upPath . DS . $info->getSaveName()), 384, 216);
+                        // $newPic = $this->image_resize(file_get_contents($this->upPath . DS . $info->getSaveName()), 384, 216);
+                        // if(file_put_contents($this->upPath . DS . $fileName[0] . "_thumb." . $fileName[1], $newPic)){
+                        $manager = new ImageManager(array('driver' => 'imagick'));
 
-                        if(file_put_contents($this->upPath . DS . $fileName[0] . "_thumb." . $fileName[1], $newPic)){
+                        $image = $manager->make(file_get_contents($this->upPath . DS . $info->getSaveName()))->resize(384, 216);
+
+                        if($image->save($this->upPath . DS . $fileName[0] . "_thumb." . $fileName[1])){
                             $this->wLog("[系统行为]{$info->getSaveName()}，成功生成了缩略图。");
                         } else {
                             $this->wLog("[系统行为]{$info->getSaveName()}，成功缩略图失败了。");
