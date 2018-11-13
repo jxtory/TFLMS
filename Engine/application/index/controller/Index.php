@@ -1,10 +1,27 @@
 <?php
 namespace app\index\controller;
+// import the Intervention Image Manager Class
+use Intervention\Image\ImageManager;
 
 class Index extends TflmsBase
 {
+    public function pi()
+    {
+        echo phpinfo();
+        return;
+    }
     public function index()
     {
+
+        // create an image manager instance with favored driver
+        $manager = new ImageManager(array('driver' => 'imagick'));
+
+
+        // to finally create image instances
+        $image = $manager->make(file_get_contents("tqupload/1.jpg"))->resize(384, 216);
+        $image->save("2.jpg");
+        return;
+
         // 渲染首页
         return $this->fetch();
     }

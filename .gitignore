@@ -1,5 +1,6 @@
 # 引擎文件
 /Engine/*
+/RoomClass/*
 
 # 一些框架
 /framework/assets/Tools/*
