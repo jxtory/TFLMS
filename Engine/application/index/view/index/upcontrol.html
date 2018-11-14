@@ -50,15 +50,18 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="well">
+			<div class="well" id="uploaderhd">
 				<a name="upload_file"></a>
-				<h4>如果上传有误，双击删除该文件(仅可操作小时内的上传内容)</h4>
+				<h4>如果上传有误，双击删除该文件</h4>
+				<i>(仅可操作一小时内的上传内容)</i>
 				<div class="row"><hr style='background-color: #aaa;height:1px;border:none;'></div>
 				{volist name="uploads" id="file" empty="一小时内无上传数据"}
 				<div class="row">
 					<div class="col-xs-12 text-center" style="margin-top: 20px;">
 						{if condition="in_array($file['fileType'], ['png', 'jpg', 'jpeg', 'bmp', 'gif'])"}
-							<img class="img-thumbnail" src="/{$filePath}/{$file['fileUrl']}_thumb.{$file['fileType']}" alt="{$file['fileUrl']}">
+							<a href="javascript: void(0);" data-cid="{$file['cid']}" data-fid="{$file['id']}">
+								<img class="img-thumbnail" src="/{$filePath}/{$file['fileUrl']}_thumb.{$file['fileType']}" alt="{$file['fileUrl']}" title="{$file['uptime']}">
+							</a>
 						{/if}
 					</div>
 				</div>
@@ -72,6 +75,7 @@
 	{include file="Common/footer" /}
 	{include file="Common/js" /}
 	<script type="text/javascript" src="~wup~/webuploader/0.1.5/webuploader.min.js"></script> 
+	<script type="text/javascript" src="~CoreJS~/tflms_Uploaderhd.js"></script> 
 	<script type="text/javascript">
 	function uploadOk(){
 	    layer.msg("上传成功, 3秒后自动返回！");
@@ -718,7 +722,7 @@
 	            }
 
 	            if(code == "Q_TYPE_DENIED"){
-	            	layer.msg("错误：文件类型错误");
+	            	layer.msg("错误：文件类型错误", {time: 6000});
 	            	return;
 	            }
 	                layer.msg('错误:' + code);

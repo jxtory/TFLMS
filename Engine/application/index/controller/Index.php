@@ -11,6 +11,12 @@ class Index extends TflmsBase
         return $this->fetch();
     }
 
+    // 上传文件 - 用户删除请求
+    public function upcontrol_del()
+    {
+        $this->error("发生了一个严重的错误", "/");
+    }
+
     // 上传控制器
     public function upcontrol()
     {
