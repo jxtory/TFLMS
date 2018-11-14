@@ -23,6 +23,10 @@
 									layer.msg("未知的错误");
 								} else {
 									layer.msg("删除失败");
+									setTimeout(function(){
+									    window.location.reload();
+									},1000); 
+
 								}
 
 						});
