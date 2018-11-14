@@ -22,6 +22,8 @@
 				<div class="row"><h4>邀请码有效期：{$cinfo['invitecodelifetime']}</h4></div>
 				<div class="row">点此刷新：<a class="btn btn-success btn-sm" href="javascript:location.replace(location.href);">刷新<i class="glyphicon glyphicon-refresh"></i></a></div>
 				<div class="row"><hr></div>
+				<div class="row">误传操作：<a class="btn btn-success btn-sm" href="#upload_file">查看</a></div>
+				<div class="row"><hr></div>
 				<form class="form form-horizontal" id="form-article-add">
 					<div class="row cl">
 						<label class="form-label col-xs-4 col-sm-2">文件上传：</label>
@@ -30,7 +32,7 @@
 								<div class="queueList">
 									<div id="dndArea" class="placeholder">
 										<div id="filePicker-2"></div>
-										<p>或将照片拖到这里，单次最多可选1个</p>
+										<p>或将文件拖到这里，单次最多可选1个</p>
 									</div>
 								</div>
 								<div class="statusBar" style="display:none;">
@@ -45,6 +47,25 @@
 						</div>
 					</div>
 				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="well">
+				<a name="upload_file"></a>
+				<h4>如果上传有误，双击删除该文件(仅可操作小时内的上传内容)</h4>
+				<div class="row"><hr style='background-color: #aaa;height:1px;border:none;'></div>
+				{volist name="uploads" id="file" empty="一小时内无上传数据"}
+				<div class="row">
+					<div class="col-xs-12 text-center" style="margin-top: 20px;">
+						{if condition="in_array($file['fileType'], ['png', 'jpg', 'jpeg', 'bmp', 'gif'])"}
+							<img class="img-thumbnail" src="/{$filePath}/{$file['fileUrl']}_thumb.{$file['fileType']}" alt="{$file['fileUrl']}">
+						{/if}
+					</div>
+				</div>
+				{/volist}
+			</div>
+			<div class="text-center fixed_page_File">
+				{$uploads->render()}
 			</div>
 		</div>
 	</div>

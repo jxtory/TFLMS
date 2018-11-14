@@ -28,6 +28,7 @@ class Index extends TflmsBase
                         'cid'           =>  session("Uploader"),
                         'fileUrl'       =>  $fileName[0],
                         'fileType'      =>  $fileName[1],
+                        'uptime'        =>  date("Y-m-d H:i:s", time()),
                         'carousel'      =>  0
                     ];
                     $res = db('files')->insert($data, true);
@@ -70,6 +71,9 @@ class Index extends TflmsBase
             $datas = db('invitation')->where('id', $cid)->find();
             if(session("Uploader") == $cid && strtotime($datas['invitecodelifetime']) > time()){
                 $this->assign("cinfo", $datas);
+                $uploads = db('files')->where("cid", $cid)->where('uptime','between time',[time() - 60 * 60, time()])->order('id desc')->paginate(5);
+                $this->assign("uploads", $uploads);
+                $this->assign("filePath", $this->upPath);
                 return $this->fetch();
             } else {
                 return $this->error("邀请码已过期", "/");
