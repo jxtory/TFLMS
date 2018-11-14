@@ -63,69 +63,18 @@ function LedControl(url)
 // Invitation Behavior
 function InvitationControl(url)
 {
-	$("#cp_serch").bind("input propertychange", function(){
-		// layer.msg($("#cp_serch").val());
-		if($("#cp_serch").val() != ""){
-		// if($("#cp_serch").val() != "" || $("#cp_serch").val() != null || $("#cp_serch").val() != "undefined"){
-		    $("#curPage").hide();
-		    $(".fixed_page").hide();
-		} else {
-			$("invitatehd").html("");
-		    $("#curPage").show();
-		    $(".fixed_page").show();
+	// $("#cp_serch").bind("input propertychange", function(){
+	$("#cp_serch").bind("keydown", function(event){
+		if(!(event && event.keyCode == "13")){
+			return;
 		}
 
-	    $.post(
-	            "invitation.html",
-	            {
-	                type: "getInvitation",
-	                content: function(){return $("#cp_serch").val();}
-	            },
-	            function(data, status){
-	                $("#invitatehd").html("");
-	                if(status == "success" && data != ""){
-	                    for(v in data){
-	                        var content = '<div class="row">';
-	                        content += '<div class="col-xs-1">' + data[v]['id'] + '</div>';
-	                        content += '<div class="col-xs-4">' + data[v]['company'] + '</div>';
-	                        if(data[v]['invitecode'] != "" && data[v]['invitecode'] != null){
-	                        	content += '<div class="col-xs-1"><a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" style="color: #00c;" data-clipboard-text="' + data[v]['invitecode'] + '">' + data[v]['invitecode'] + '</a></div>';
-	                        } else {
-								content += '<div class="col-xs-1"><span style="color: #c00;">未授权</span></div>';
-	                        }
+		cp_serch();
 
-	                        if(data[v]['invitecodelifetime'] != ""  && data[v]['invitecodelifetime'] != null){
-	                        	var ctime = new Date(data[v]['invitecodelifetime']);
-	                        	var nowtime = new Date(new Date());
-	                        	if(ctime.getTime() > nowtime.getTime()){
-									content += '<div class="col-xs-2"><span>' + data[v]['invitecodelifetime'] + '</span></div>';
-	                        	} else {
-									content += '<div class="col-xs-2"><span style="color: #c00;">已过期</span></span></div>';
-	                        	}
+	});
 
-	                        } else {
-								content += '<div class="col-xs-2"><span>无</span></div>';
-	                        }
-
-	                        content += '<div class="col-xs-4">';
-	                        content += '<p><a href="javascript: void(0);" data-ev="CreIc" data-cid="' + data[v]['id'] + '">生成邀请码</a></p>';
-	                        if(data[v]['invitecode'] != "" && data[v]['invitecode'] != null){
-	                        	content += '<p><a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" data-cid="' + data[v]['id'] + '" data-clipboard-text="您的邀请码是：' + data[v]['invitecode'] + ';请打开 led.tqcen.com 上传内容.">复制信息</a></p>';
-	                        	content += '<p><a href="javascript: void(0);" data-ev="Delay" data-cid="' + data[v]['id'] + '">延长一天</a></p>';
-	                        	content += '<p><a href="javascript: void(0);" data-ev="UnIc" data-cid="' + data[v]['id'] + '">取消邀请</a></p>';
-	                        }
-                        	content += '<p><a href="javascript: void(0);" data-ev="PassID" data-cid="' + data[v]['id'] + '">删除公司</a></p>';
-	                        content += '</div>';
-	                        content += '</div>';
-	                        content += '<div class="row"><hr></div>';
-	                        $("#invitatehd").html($("#invitatehd").html() + content);
-
-	                    }
-	                } else {
-
-	                }
-	            }
-	        );
+	$("#cp_serch_a").on('click', function(event) {
+		cp_serch();
 
 	});
 
@@ -184,6 +133,74 @@ $("#invitatehd").on('click', 'a',function(event) {
 	});
 	/* Act on the event */
 });
+
+// 公司搜索
+function cp_serch()
+{
+	// layer.msg($("#cp_serch").val());
+	if($("#cp_serch").val() != ""){
+	// if($("#cp_serch").val() != "" || $("#cp_serch").val() != null || $("#cp_serch").val() != "undefined"){
+	    $("#curPage").hide();
+	    $(".fixed_page").hide();
+	} else {
+		$("invitatehd").html("");
+	    $("#curPage").show();
+	    $(".fixed_page").show();
+	}
+
+    $.post(
+            "invitation.html",
+            {
+                type: "getInvitation",
+                content: function(){return $("#cp_serch").val();}
+            },
+            function(data, status){
+                $("#invitatehd").html("");
+                if(status == "success" && data != ""){
+                    for(v in data){
+                        var content = '<div class="row">';
+                        content += '<div class="col-xs-1">' + data[v]['id'] + '</div>';
+                        content += '<div class="col-xs-4">' + data[v]['company'] + '</div>';
+                        if(data[v]['invitecode'] != "" && data[v]['invitecode'] != null){
+                        	content += '<div class="col-xs-1"><a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" style="color: #00c;" data-clipboard-text="' + data[v]['invitecode'] + '">' + data[v]['invitecode'] + '</a></div>';
+                        } else {
+							content += '<div class="col-xs-1"><span style="color: #c00;">未授权</span></div>';
+                        }
+
+                        if(data[v]['invitecodelifetime'] != ""  && data[v]['invitecodelifetime'] != null){
+                        	var ctime = new Date(data[v]['invitecodelifetime']);
+                        	var nowtime = new Date(new Date());
+                        	if(ctime.getTime() > nowtime.getTime()){
+								content += '<div class="col-xs-2"><span>' + data[v]['invitecodelifetime'] + '</span></div>';
+                        	} else {
+								content += '<div class="col-xs-2"><span style="color: #c00;">已过期</span></span></div>';
+                        	}
+
+                        } else {
+							content += '<div class="col-xs-2"><span>无</span></div>';
+                        }
+
+                        content += '<div class="col-xs-4">';
+                        content += '<p><a href="javascript: void(0);" data-ev="CreIc" data-cid="' + data[v]['id'] + '">生成邀请码</a></p>';
+                        if(data[v]['invitecode'] != "" && data[v]['invitecode'] != null){
+                        	content += '<p><a href="javascript: void(0);" class="GetInfo" data-ev="GetInfo" data-cid="' + data[v]['id'] + '" data-clipboard-text="您的邀请码是：' + data[v]['invitecode'] + ';请打开 led.tqcen.com 上传内容.">复制信息</a></p>';
+                        	content += '<p><a href="javascript: void(0);" data-ev="Delay" data-cid="' + data[v]['id'] + '">延长一天</a></p>';
+                        	content += '<p><a href="javascript: void(0);" data-ev="UnIc" data-cid="' + data[v]['id'] + '">取消邀请</a></p>';
+                        }
+                    	content += '<p><a href="javascript: void(0);" data-ev="PassID" data-cid="' + data[v]['id'] + '">删除公司</a></p>';
+                        content += '</div>';
+                        content += '</div>';
+                        content += '<div class="row"><hr></div>';
+                        $("#invitatehd").html($("#invitatehd").html() + content);
+
+                    }
+                } else {
+
+                }
+            }
+        );
+
+}
 
 //判断客户端
 function isMobile() {

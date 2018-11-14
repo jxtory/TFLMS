@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: tflms
 Target Host: localhost
 Target Database: tflms
-Date: 2018/11/11 4:20:41
+Date: 2018/11/14 16:37:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,6 +26,7 @@ CREATE TABLE `tflms_files` (
   `cid` int(11) NOT NULL,
   `fileUrl` varchar(255) NOT NULL,
   `fileType` varchar(30) DEFAULT NULL,
+  `uptime` datetime DEFAULT NULL,
   `carousel` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
