@@ -301,7 +301,7 @@ function cpf_serch()
                 content: function(){return $("#cpf_serch").val();}
             },
             function(data, status){
-                $("#file").html("");
+                $("#filehd").html("");
                 if(status == "success" && data != ""){
                     for(v in data){
                         var content = '<div class="row">';
