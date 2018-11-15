@@ -228,7 +228,7 @@ function FileControl(url)
 		$.post(url, {
 			type: 'fileControl',
 			act: $(this).data('ev'),
-			cid: $(this).data('fid')
+			fid: $(this).data('fid')
 		} ,function(data, status){
 			if(status == "success"){
 				layer.msg(data + "3秒后刷新！");
@@ -251,7 +251,7 @@ $("#filehd").on('click', 'a',function(event) {
 	$.post("/ht/fc", {
 		type: 'fileControl',
 		act: $(event.target).data('ev'),
-		cid: $(event.target).data('fid')
+		fid: $(event.target).data('fid')
 	} ,function(data, status){
 		if(status == "success"){
 			layer.msg(data + "3秒后刷新！");

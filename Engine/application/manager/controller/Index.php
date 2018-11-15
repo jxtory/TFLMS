@@ -52,6 +52,78 @@ class Index extends TflmsMBase
 
     }
 
+    // 文件管理控制器
+    public function filecontrol()
+    {
+        if((session('manager') == "Manager_AuthOk") && (strlen(session("manager_who")) > 0)){
+            if(request()->isPost()){
+                if(input("post.type") == "fileControl"){
+                    $datas = input("post.");
+                    $who = session("manager_who");
+                    $filecur = db('files')->where("id", $datas['fid'])->find();
+                    $companyName = db("invitation")->where('id', $filecur['cid'])->find()['company'];
+                    unset($datas['type']);
+                    switch ($datas['act'])
+                    {
+                    case "playIt":
+                        if($this->CreControlKey("playfile", $filecur['fileUrl'] . "." . $filecur['fileType'])){
+                            $this->wLog("[管理行为]{$companyName}-的文件被提出播放", $who);
+                            return "操作成功！";
+                        }
+
+                        break;
+                    case "delIt":
+                        $delFile = db("files")->where("id", $filecur['cid'])->delete();
+                        if($delFile){
+                            $this->wLog("[管理行为]{$companyName}的{$filecur['fileUrl']}.{$filecur['fileType']}文件已删除!", $who);
+                            // 正文件
+                            if(!unlink($this->upPath . DS . $filecur['fileUrl'] . '.' . $filecur['fileType'])){
+                                $this->wLog("[系统行为]{$filecur['fileUrl']}.{$filecur['fileType']}数据记录被删除，但文件删除失败。");
+                            }
+                            // 缩略文件
+                            if($filecur['fileType'] != "mp4"){
+                                if(!unlink($this->upPath . DS . $filecur['fileUrl'] . '_thumb.' . $filecur['fileType'])){
+                                    $this->wLog("[系统行为]{$filecur['fileUrl']}_thumb.{$filecur['fileType']}数据记录被删除，但文件删除失败。");
+                                }
+                            }
+                            return "操作成功！";
+                        }
+                        break;
+                    case "UnIc":
+                        $data = [
+                            'invitecode'            =>  "",
+                            'invitecodelifetime'    =>  null
+                        ];
+
+                        $res = db("invitation")->where('id', $datas['cid'])->update($data);
+                        if($res){
+                            $this->wLog("[管理行为]为公司-{$companyName}-取消了邀请授权", $who);
+                            return "操作成功！";
+                        }
+                        break;
+                    case "PassID":
+                        $res = db("invitation")->where('id', $datas['cid'])->delete();
+                        if($res){
+                            $this->wLog("[管理行为]删除公司-{$companyName}", $who);
+                            return "操作成功！";
+                        }
+                        break;
+                    default:
+                        return "操作失败！行为异常！0";
+                    }
+                    return "操作失败！";
+                } else {
+                    return "操作失败！";
+                }
+            }
+        } else {
+            return "Error!";
+        }
+
+        return "Error!";
+
+    }
+
     // 邀请管理
     public function invitation()
     {
