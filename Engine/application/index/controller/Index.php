@@ -28,8 +28,10 @@ class Index extends TflmsBase
                         $this->wLog("[系统行为]{$delFile['fileUrl']}.{$delFile['fileType']}数据记录被删除，但文件删除失败。");
                     }
                     // 缩略文件
-                    if(!unlink($this->upPath . DS . $delFile['fileUrl'] . '_thumb.' . $delFile['fileType'])){
-                        $this->wLog("[系统行为]{$delFile['fileUrl']}_thumb.{$delFile['fileType']}数据记录被删除，但文件删除失败。");
+                    if($delFile['fileType'] != "mp4"){
+                        if(!unlink($this->upPath . DS . $delFile['fileUrl'] . '_thumb.' . $delFile['fileType'])){
+                            $this->wLog("[系统行为]{$delFile['fileUrl']}_thumb.{$delFile['fileType']}数据记录被删除，但文件删除失败。");
+                        }
                     }
                     return $datas;
                 } else {

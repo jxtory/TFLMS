@@ -57,6 +57,7 @@ class Allbase extends Controller
         $res = db("log")->insert($datas);        
     }
 
+    // 图片缩略图
     public function image_resize($imagedata, $width, $height, $per = 0) {
         /**
          * @param $imagedata    图像数据
