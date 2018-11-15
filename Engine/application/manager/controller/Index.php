@@ -281,6 +281,18 @@ class Index extends TflmsMBase
     // LED控制
     public function led()
     {
+        // 放映信息
+        if(file_exists("playfile")){
+            $file = file_get_contents("playfile");
+            $playcontent['type'] = explode(".", $file)[1];
+            $playcontent['content'] = $file;
+            $this->assign("playcontent", $playcontent);
+
+        } else {
+            $this->assign("playcontent", "暂无放映信息");
+        }
+
+        $this->assign("filePath", $this->upPath);
         $this->SetPageName("屏幕控制");
         return $this->fetch();
     }
@@ -321,6 +333,17 @@ class Index extends TflmsMBase
                     case "cled":
                         $this->wLog("[管理行为]控制大屏幕关机", $who);
                         if($this->CreControlKey("led_close")){return "操作成功！";}
+                        break;
+                    case "fplay":
+                        $this->wLog("[管理行为]执行了一次放映任务", $who);
+                        if($this->CreControlKey("led_play")){return "操作成功！";}
+                        break;
+                    case "fdel":
+                        if(file_exists("playfile") && unlink("playfile")){
+                            return "操作成功！";
+                        } else {
+                            return "当前或无设置";
+                        }
                         break;
                     default:
                         return "操作失败！行为异常！0";

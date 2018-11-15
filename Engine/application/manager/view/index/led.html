@@ -4,28 +4,49 @@
 <title>后台管理系统·{$pageName|default="后台主页"}</title>
 {include file="Index@Common/meta" /}
 {include file="Index@Common/header" /}
+{include file="Index@Common/videoCdn" /}
 </head>
 <body>
 	{include file="Common/nav" /}
 	<div class="container text-center">
 		<div class"row" id="ledhd">
 			<div class="row">
-				<div class="col-xs-4">
-					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="max">窗口复位</a>
-				</div>
+				<strong class="text-primary">放映材料</strong>
+			</div>
+			<div class="row">
+				{if condition="is_array($playcontent)"}
+					{if condition="$playcontent['type'] neq 'mp4'"}
+						<img src="/{$filePath}/{$playcontent['content']}" width="384" height="216">
+						{else}
+						<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="auto" poster="" data-setup playsinline width="384" height="216">
+						  <source src="/{$filePath}/{$playcontent['content']}" type='video/mp4'>
+						</video>					
+
+					{/if}
+					{else}
+					{$playcontent}
+				{/if}
+			</div>
+			<div class="row"><hr></div>
+			<div class="row">
 				<div class="col-xs-4">
 					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="oled">屏幕开机</a>
 				</div>
 				<div class="col-xs-4">
 					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="cled">屏幕关机</a>
 				</div>
+				<div class="col-xs-4">
+					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="max">窗口复位</a>
+				</div>
 				
 			</div>
 			<div class="row">*</div>
-
 			<div class="row">
 				<div class="col-xs-4">
-					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="">放映图片</a>
+					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="fplay">启动放映</a>
+				</div>
+				<div class="col-xs-4">
+					<a class="btn btn-lg btn-success" href="javascript: void(0);" data-ev="fdel">删除材料</a>
 				</div>
 
 			</div>
