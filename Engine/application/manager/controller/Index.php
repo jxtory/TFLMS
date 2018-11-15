@@ -73,7 +73,7 @@ class Index extends TflmsMBase
 
                         break;
                     case "delIt":
-                        $delFile = db("files")->where("id", $filecur['cid'])->delete();
+                        $delFile = db("files")->where("id", $filecur['id'])->delete();
                         if($delFile){
                             $this->wLog("[管理行为]{$companyName}的{$filecur['fileUrl']}.{$filecur['fileType']}文件已删除!", $who);
                             // 正文件
@@ -89,22 +89,18 @@ class Index extends TflmsMBase
                             return "操作成功！";
                         }
                         break;
-                    case "UnIc":
-                        $data = [
-                            'invitecode'            =>  "",
-                            'invitecodelifetime'    =>  null
-                        ];
+                    case "cygdbf":
+                    case "qxgdbf":
+                        $cars = db("files")->where("id", $filecur['id'])->find()['carousel'];
 
-                        $res = db("invitation")->where('id', $datas['cid'])->update($data);
-                        if($res){
-                            $this->wLog("[管理行为]为公司-{$companyName}-取消了邀请授权", $who);
-                            return "操作成功！";
+                        if($cars == "0"){
+                            $res = db("files")->where("id", $filecur['id'])->update(['carousel' => "1"]);
+                        } else {
+                            $res = db("files")->where("id", $filecur['id'])->update(['carousel' => "0"]);
                         }
-                        break;
-                    case "PassID":
-                        $res = db("invitation")->where('id', $datas['cid'])->delete();
+
                         if($res){
-                            $this->wLog("[管理行为]删除公司-{$companyName}", $who);
+                            $this->wLog("[管理行为]{$companyName}的{$filecur['fileUrl']}.{$filecur['fileType']}文件,加入滚动播放！", $who);
                             return "操作成功！";
                         }
                         break;
