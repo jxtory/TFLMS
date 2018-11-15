@@ -30,6 +30,8 @@ return [
     'ht/clog' =>    'manager/index/clearlog',
     // 管理-邀请信息控制
     'ht/ic' =>  'manager/index/invitationcontrol',
+    // 管理-文件内容控制
+    'ht/fc' =>  'manager/index/filecontrol',
     // 用户发起上传
     'up' => 'index/index/upcontrol',
     // 用户发起删除

@@ -13,13 +13,20 @@ class Index extends TflmsMBase
     public function file()
     {
         if(request()->isAjax()){
-            if(input('type') == "getInvitation"){
+            if(input('type') == "getFile"){
                 $search = input("content");
                 if($search){
-                    $datas = db("invitation")
-                        ->where("company","like", "%" . $search ."%")
+                    // $datas = db("invitation")
+                    //     ->where("company","like", "%" . $search ."%")
+                    //     ->select();
+                    // // 
+                    $datas = db('files a')
+                        ->field("a.*, b.company")
+                        ->join("invitation b", "b.id = a.cid")
+                        ->where('b.company',"like", "%" . $search ."%")
+                        ->order("id desc")
                         ->select();
-                    // 
+
                     if($datas){
                         return $datas;
                     } else {

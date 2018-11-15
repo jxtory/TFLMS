@@ -12,11 +12,13 @@
 			<h3>上传文件管理</h3>
 			<div class="row"><hr></div>
 			<div class="row">
-				  <div class="form-inline">
-				    <input type="text" class="form-control" id="cp_serch_file" name="cp_serch_file" placeholder="公司搜索">
-				    <label for="serch">查 询</label>
-				  </div>
-				</form>
+				<div class="form-inline">
+					<div class="form-group">
+					  <label class="sr-only" for="serch">查 询</label>
+					  <input type="text" class="form-control" id="cpf_serch" name="cpf_serch" placeholder="搜索公司">
+					</div>
+					<a href="javascript: void(0);" class="btn btn-default" id="cpf_serch_a">查询</a>
+				</div>
 			</div>
 			<div class="row"><hr></div>
 		</div>
@@ -42,10 +44,6 @@
 						{elseif condition="in_array($file['fileType'], ['mp4'])" /}
 						<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="none" poster="" data-setup playsinline width="384" height="216">
 						  <source src="/{$filePath}/{$file['fileUrl']}.{$file['fileType']}" type='video/{$file['fileType']}'>
-						  <p class="vjs-no-js">
-						    To view this video please enable JavaScript, and consider upgrading to a web browser that
-						    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-						  </p>
 						</video>
 					{/if}
 				</div>

@@ -17,6 +17,10 @@ $(function(){
 	var IcUrl = "/ht/ic";
 	InvitationControl(IcUrl);
 
+	// Define Fc Url
+	var FcUrl = "/ht/fc";
+	FileControl(FcUrl);
+
 });
 
 // 获取$pageName；激活Nav高亮；
@@ -143,7 +147,7 @@ function cp_serch()
 	    $("#curPage").hide();
 	    $(".fixed_page").hide();
 	} else {
-		$("invitatehd").html("");
+		$("#invitatehd").html("");
 	    $("#curPage").show();
 	    $(".fixed_page").show();
 	}
@@ -202,6 +206,129 @@ function cp_serch()
 
 }
 
+// File Behavior
+function FileControl(url)
+{
+	$("#cpf_serch").bind("keydown", function(event){
+		if(!(event && event.keyCode == "13")){
+			return;
+		}
+
+		cpf_serch();
+
+	});
+
+	$("#cpf_serch_a").on('click', function(event) {
+		cpf_serch();
+
+	});
+
+	$(".filehd a").click(function(event) {
+		if($(this).data('ev') == "GetInfo"){
+			//JS里指定复制的内容
+			var clipboard = new Clipboard('.GetInfo');
+			layer.msg("已复制到剪切板");
+			return;
+		}
+
+		$(this).parent().parent().hide();
+		$.post(url, {
+			type: 'FileControl',
+			act: $(this).data('ev'),
+			cid: $(this).data('cid')
+		} ,function(data, status){
+			if(status == "success"){
+				layer.msg(data + "3秒后刷新！");
+				setTimeout(function(){
+					location.replace(location.href);
+				},3000); 
+
+			} else {
+				layer.msg("有问题！");
+			}
+		});
+
+
+	});
+
+}
+
+$("#filehd").on('click', 'a',function(event) {
+	if($(event.target).data('ev') == "GetInfo"){
+		//JS里指定复制的内容
+		var clipboard = new Clipboard('.GetInfo');
+		layer.msg("已复制到剪切板");
+		return;
+	}
+
+	$(event.target).parent().parent().hide();
+	$.post("/ht/ic", {
+		type: 'invitateControl',
+		act: $(event.target).data('ev'),
+		cid: $(event.target).data('cid')
+	} ,function(data, status){
+		if(status == "success"){
+			layer.msg(data + "3秒后刷新！");
+			setTimeout(function(){
+				location.replace(location.href);
+			},3000); 
+
+		} else {
+			layer.msg("有问题！");
+		}
+	});
+	/* Act on the event */
+});
+
+// 公司搜索
+function cpf_serch()
+{
+	// layer.msg($("#cp_serch").val());
+	if($("#cpf_serch").val() != ""){
+	// if($("#cp_serch").val() != "" || $("#cp_serch").val() != null || $("#cp_serch").val() != "undefined"){
+	    $("#curPage_File").hide();
+	    $(".fixed_page_File").hide();
+	} else {
+		$("#filehd").html("");
+	    $("#curPage_File").show();
+	    $(".fixed_page_File").show();
+	}
+
+    $.post(
+            "file.html",
+            {
+                type: "getFile",
+                content: function(){return $("#cpf_serch").val();}
+            },
+            function(data, status){
+                $("#file").html("");
+                if(status == "success" && data != ""){
+                    for(v in data){
+                        var content = '<div class="row">';
+                        content += '<div class="col-xs-1">' + data[v]['id'] + '</div>';
+                        content += '<div class="col-xs-3">' + data[v]['company'] + '</div>';
+                        content += '<div class="col-xs-6">';
+                        if(in_array(data[v]['fileType'], ['png', 'jpg', 'jpeg', 'bmp', 'gif'])){
+                        	content += '<img class="img-thumbnail" src="/tqupload/' + data[v]['fileUrl'] + '_thumb.' + data[v]['fileType'] + '" alt="' + data[v]['fileUrl'] + '">';
+                        } else if(in_array(data[v]['fileType'], ['mp4'])) {
+							content += '<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="none" poster="" data-setup playsinline width="384" height="216">';
+							content += '<source src="/tqupload/' + data[v]['fileUrl'] + '.' + data[v]['fileType'] + '" type="video/' + data[v]['fileType'] + '"></video>';
+                        }
+                        content += '</div>';
+                        content += '<div></div>';
+                        content += '</div>';
+                        content += '<div class="row"><hr></div>';
+                        $("#filehd").html($("#filehd").html() + content);
+
+                    }
+                } else {
+
+                }
+            }
+        );
+
+}
+
 //判断客户端
 function isMobile() {
     var userAgentInfo = navigator.userAgent;
@@ -245,4 +372,14 @@ function isMobileClient() {
     } else {
         return false;
     }
+}
+
+// JS in_array
+function in_array(search, array){
+    for(var i in array){
+        if(array[i] == search){
+            return true;
+        }
+    }
+    return false;
 }
