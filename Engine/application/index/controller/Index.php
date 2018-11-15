@@ -14,6 +14,33 @@ class Index extends TflmsBase
     // 上传文件 - 用户删除请求
     public function upcontrol_del()
     {
+        if(request()->isAjax()){
+            if(input('type') == "delUpFile"){
+                $fid = input("fid");
+                $delFile = db("files")->where("id", $fid)->find();
+                $datas = db("files")->where("id", $fid)->where("cid", session("Uploader"))->where('uptime','between time',[time() - 60 * 60, time()])->order('id desc')->delete();
+                // CID
+                $companyName = db("invitation")->where("id", session("Uploader"))->find()['company'];
+                if($datas){
+                    $this->wLog("[用户行为]{$companyName}，删除了上传了文件{$delFile['fileUrl']}.{$delFile['fileType']}");
+                    // 正文件
+                    if(!unlink($this->upPath . DS . $delFile['fileUrl'] . '.' . $delFile['fileType'])){
+                        $this->wLog("[系统行为]{$delFile['fileUrl']}.{$delFile['fileType']}数据记录被删除，但文件删除失败。");
+                    }
+                    // 缩略文件
+                    if(!unlink($this->upPath . DS . $delFile['fileUrl'] . '_thumb.' . $delFile['fileType'])){
+                        $this->wLog("[系统行为]{$delFile['fileUrl']}_thumb.{$delFile['fileType']}数据记录被删除，但文件删除失败。");
+                    }
+                    return $datas;
+                } else {
+                    return;
+                }
+            }
+            return;
+        } else {
+           $this->error("发生了一个严重的错误", "/");
+        }
+
         $this->error("发生了一个严重的错误", "/");
     }
 

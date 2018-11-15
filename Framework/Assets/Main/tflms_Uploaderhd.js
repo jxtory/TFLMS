@@ -4,13 +4,13 @@
 				time: 0,
 				btn: ['删除', '放弃'],
 				btn1:function(){
-						$(event.target).hide();
+						$(event.target).parent().hide();
 
 						$.post(
 							"/upd",
 							{
-								types: "delUpFile",
-								fid: $(event.target).data('fid')
+								type: "delUpFile",
+								fid: $(event.target).parent().data('fid')
 							},
 
 							function(data){
