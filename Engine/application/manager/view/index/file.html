@@ -47,7 +47,25 @@
 						</video>
 					{/if}
 				</div>
-				<div>
+				<div class="col-xs-2">
+					<p>
+						<a href="javascript: void(0);" data-ev="playIt" data-fid="{$file['id']}">放映资源</a>
+					</p>
+					<p>
+						<a href="javascript: void(0);" data-ev="delIt" data-fid="{$file['id']}">删除文件</a>
+					</p>
+					{if condition="!(in_array($file['fileType'], ['mp4']))"}
+						{if condition="$file['carousel'] == '0'"}
+							<p>
+								<a href="javascript: void(0);" data-ev="cygdbf" data-fid="{$file['id']}">参与滚动播放</a>
+							</p>
+							{else /}
+							<p>
+								<a href="javascript: void(0);" data-ev="qxgdbf" data-fid="{$file['id']}">取消滚动播放</a>
+							</p>
+						{/if}
+					{/if}
+
 
 				</div>
 			</div>

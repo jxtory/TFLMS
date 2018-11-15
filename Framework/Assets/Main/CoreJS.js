@@ -224,18 +224,11 @@ function FileControl(url)
 	});
 
 	$(".filehd a").click(function(event) {
-		if($(this).data('ev') == "GetInfo"){
-			//JS里指定复制的内容
-			var clipboard = new Clipboard('.GetInfo');
-			layer.msg("已复制到剪切板");
-			return;
-		}
-
 		$(this).parent().parent().hide();
 		$.post(url, {
-			type: 'FileControl',
+			type: 'fileControl',
 			act: $(this).data('ev'),
-			cid: $(this).data('cid')
+			cid: $(this).data('fid')
 		} ,function(data, status){
 			if(status == "success"){
 				layer.msg(data + "3秒后刷新！");
@@ -254,18 +247,11 @@ function FileControl(url)
 }
 
 $("#filehd").on('click', 'a',function(event) {
-	if($(event.target).data('ev') == "GetInfo"){
-		//JS里指定复制的内容
-		var clipboard = new Clipboard('.GetInfo');
-		layer.msg("已复制到剪切板");
-		return;
-	}
-
 	$(event.target).parent().parent().hide();
-	$.post("/ht/ic", {
-		type: 'invitateControl',
+	$.post("/ht/fc", {
+		type: 'fileControl',
 		act: $(event.target).data('ev'),
-		cid: $(event.target).data('cid')
+		cid: $(event.target).data('fid')
 	} ,function(data, status){
 		if(status == "success"){
 			layer.msg(data + "3秒后刷新！");
@@ -315,7 +301,17 @@ function cpf_serch()
 							content += '<source src="/tqupload/' + data[v]['fileUrl'] + '.' + data[v]['fileType'] + '" type="video/' + data[v]['fileType'] + '"></video>';
                         }
                         content += '</div>';
-                        content += '<div></div>';
+                        content += '<div class="col-xs-2">';
+                        content += '<p><a href="javascript: void(0);" data-ev="playIt" data-fid="' + data[v]['id'] + '">放映资源</a></p>';
+                        content += '<p><a href="javascript: void(0);" data-ev="delIt" data-fid="' + data[v]['id'] + '">删除文件</a></p>';
+                        if(!in_array(data[v]['fileType'], ['mp4'])){
+                        	if(data[v]['carousel'] == "0"){
+		                        content += '<p><a href="javascript: void(0);" data-ev="cygdbf" data-fid="' + data[v]['id'] + '">参与滚动播放</a></p>';
+                        	} else {
+		                        content += '<p><a href="javascript: void(0);" data-ev="qxgdbf" data-fid="' + data[v]['id'] + '">取消滚动播放</a></p>';
+                        	}
+                        }
+                        content += '</div>';
                         content += '</div>';
                         content += '<div class="row"><hr></div>';
                         $("#filehd").html($("#filehd").html() + content);
