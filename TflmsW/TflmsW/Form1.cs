@@ -258,6 +258,8 @@ namespace TflmsW
             DeleteFiles("app_max");
             DeleteFiles("led_open");
             DeleteFiles("led_close");
+            DeleteFiles("led_play");
+            DeleteFiles("led_carousel");
             DeleteFiles("opendoor");
             DeleteFiles("opendoor15");
             DeleteFiles("closedoor");
