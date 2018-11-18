@@ -19,7 +19,7 @@
 						<img src="/{$filePath}/{$playcontent['content']}_thumb.{$playcontent['type']}" width="384" height="216">
 						{else}
 						<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="auto" poster="" data-setup playsinline width="384" height="216">
-						  <source src="/{$filePath}/{$playcontent['content']}" type='video/mp4'>
+						  <source src="/{$filePath}/{$playcontent['content']}.{$playcontent['type']}" type='video/mp4'>
 						</video>					
 
 					{/if}
