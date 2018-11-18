@@ -34,6 +34,22 @@ class Index extends TflmsMBase
                     }
                 }
             }
+
+            if(input('type') == 'getFile_Car'){
+                $datas = db('files a')
+                    ->field("a.*, b.company")
+                    ->join("invitation b", "b.id = a.cid")
+                    ->where('carousel', '1')
+                    ->select();
+
+                if($datas){
+                    return $datas;
+                } else {
+                    return;
+                }
+
+            }
+
             return;
         } else {
             // 公司信息
@@ -45,6 +61,7 @@ class Index extends TflmsMBase
 
             $this->assign("files", $files);
             $this->assign("filePath", $this->upPath);
+            $this->assign("carCount", db("files")->where("carousel", "1")->count());
 
             $this->SetPageName("数据审核");
             return $this->fetch();
@@ -94,7 +111,12 @@ class Index extends TflmsMBase
                         $cars = db("files")->where("id", $filecur['id'])->find()['carousel'];
 
                         if($cars == "0"){
-                            $res = db("files")->where("id", $filecur['id'])->update(['carousel' => "1"]);
+                            $carcount = db("files")->where("carousel", "1")->count();
+                            if($carcount < 10){
+                                $res = db("files")->where("id", $filecur['id'])->update(['carousel' => "1"]);
+                            } else {
+                                return "滚动图像不能超过10张！_";
+                            }
                         } else {
                             $res = db("files")->where("id", $filecur['id'])->update(['carousel' => "0"]);
                         }
@@ -335,7 +357,24 @@ class Index extends TflmsMBase
                         if($this->CreControlKey("led_close")){return "操作成功！";}
                         break;
                     case "fplay":
+                        if(!file_exists("playfile")){return "放映材料异常！";}
                         $this->wLog("[管理行为]执行了一次放映任务", $who);
+                        if($this->CreControlKey("led_play")){return "操作成功！";}
+                        break;
+                    case "fplay_car":
+                        if(file_exists("playfiles")){unlink("playfiles");}
+                        $carFile = db("files")->where("carousel", "1")->field("fileUrl,fileType")->select();
+                        $pfc = [];
+                        foreach ($carFile as $key => $value) {
+                            # code...
+                            $pfc[] = $value['fileUrl'] . "." . $value['fileType'];
+                        }
+
+                        $pfc = implode(",", $pfc);
+                        file_put_contents("playfiles", $pfc);
+
+                        if(!file_exists("playfiles")){return "放映材料异常！";}
+                        $this->wLog("[管理行为]执行了一次滚动放映任务", $who);
                         if($this->CreControlKey("led_play")){return "操作成功！";}
                         break;
                     case "fdel":
