@@ -325,6 +325,56 @@ function cpf_serch()
 
 }
 
+// 滚动搜索
+function car_search()
+{
+    $("#curPage_File").hide();
+    $(".fixed_page_File").hide();
+
+    $.post(
+            "file.html",
+            {
+                type: "getFile_Car"
+            },
+            function(data, status){
+                $("#filehd").html("");
+                if(status == "success" && data != ""){
+                    for(v in data){
+                        var content = '<div class="row">';
+                        content += '<div class="col-xs-1">' + data[v]['id'] + '</div>';
+                        content += '<div class="col-xs-3">' + data[v]['company'] + '</div>';
+                        content += '<div class="col-xs-6">';
+                        if(in_array(data[v]['fileType'], ['png', 'jpg', 'jpeg', 'bmp', 'gif'])){
+                        	content += '<img class="img-thumbnail" src="/tqupload/' + data[v]['fileUrl'] + '_thumb.' + data[v]['fileType'] + '" alt="' + data[v]['fileUrl'] + '">';
+                        } else if(in_array(data[v]['fileType'], ['mp4'])) {
+							content += '<video id="my-video" style="margin:0 auto;" class="video-js vjs-big-play-centered" controls preload="none" poster="" data-setup playsinline width="384" height="216">';
+							content += '<source src="/tqupload/' + data[v]['fileUrl'] + '.' + data[v]['fileType'] + '" type="video/' + data[v]['fileType'] + '"></video>';
+                        }
+                        content += '</div>';
+                        content += '<div class="col-xs-2">';
+                        content += '<p><a href="javascript: void(0);" data-ev="playIt" data-fid="' + data[v]['id'] + '">放映资源</a></p>';
+                        content += '<p><a href="javascript: void(0);" data-ev="delIt" data-fid="' + data[v]['id'] + '">删除文件</a></p>';
+                        if(!in_array(data[v]['fileType'], ['mp4'])){
+                        	if(data[v]['carousel'] == "0"){
+		                        content += '<p><a href="javascript: void(0);" data-ev="cygdbf" data-fid="' + data[v]['id'] + '">参与滚动播放</a></p>';
+                        	} else {
+		                        content += '<p><a href="javascript: void(0);" data-ev="qxgdbf" data-fid="' + data[v]['id'] + '">取消滚动播放</a></p>';
+                        	}
+                        }
+                        content += '</div>';
+                        content += '</div>';
+                        content += '<div class="row"><hr></div>';
+                        $("#filehd").html($("#filehd").html() + content);
+
+                    }
+                } else {
+
+                }
+            }
+        );
+
+}
+
 //判断客户端
 function isMobile() {
     var userAgentInfo = navigator.userAgent;

@@ -285,7 +285,7 @@ class Index extends TflmsMBase
         if(file_exists("playfile")){
             $file = file_get_contents("playfile");
             $playcontent['type'] = explode(".", $file)[1];
-            $playcontent['content'] = $file;
+            $playcontent['content'] = explode(".", $file)[0];
             $this->assign("playcontent", $playcontent);
 
         } else {
