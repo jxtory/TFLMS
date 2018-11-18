@@ -22,6 +22,14 @@ namespace TflmsW
             InitializeComponent();
         }
 
+        // 控制内容
+        public String fileCmdContent = "";
+        // 文件列表
+        public String[] fileList = null;
+        // 图像资源
+        public List<Image> pictures = new List<Image>();
+
+
         // LED 显示器开关控制
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -110,9 +118,16 @@ namespace TflmsW
             else
             {
                 axCZKEM1.GetLastError(ref idwErrorCode);
-                MessageBox.Show("Unable to connect the device,ErrorCode=" + idwErrorCode.ToString(), "Error");
+                //MessageBox.Show("Unable to connect the device,ErrorCode=" + idwErrorCode.ToString(), "Error");
+                File.WriteAllText("doorError.txt", "大门没有连接成功，错误代码是：" + idwErrorCode.ToString());
             }
             Cursor = Cursors.Default;
+
+            // 放映器
+            this.BackColor = Color.Black;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -123,6 +138,16 @@ namespace TflmsW
             {
                 DeleteFile(appPath + "/app_quit");
                 System.Environment.Exit(0);
+            }
+
+            // 启动放映
+            if (File.Exists(appPath + "/led_play"))
+            {
+                DeleteFile(appPath + "/led_play");
+                ReadIt(appPath + "/playfile");
+                String playFile = fileCmdContent;
+                this.BackgroundImage = Image.FromFile(appPath + "/tqupload/" + fileCmdContent);
+
             }
 
             // 窗口复位
@@ -298,20 +323,20 @@ namespace TflmsW
 
         }
 
-        // 添加图像测试
-        public void AddPictureBox(int left, int top)
-        {
-            PictureBox pic = new PictureBox();
-            this.Controls.Add(pic);
-            pic.Left = left;
-            pic.Top = top;
-            pic.Width = this.Width;
-            pic.Height = this.Height;
-            //pic.Image = Image.FromFile(@"E:\\86d6277f9e2f070891004d53e424b899a901f258.jpg");
-            pic.SizeMode = PictureBoxSizeMode.StretchImage;
-            //pic.Load("http://e.hiphotos.baidu.com/image/pic/item/9345d688d43f8794906df240df1b0ef41ad53ac9.jpg");
-            pic.Load("http://led.tqcen.com/1.jpg");
-        }
+        //// 添加图像测试
+        //public void AddPictureBox(int left, int top)
+        //{
+        //    PictureBox pic = new PictureBox();
+        //    this.Controls.Add(pic);
+        //    pic.Left = left;
+        //    pic.Top = top;
+        //    pic.Width = this.Width;
+        //    pic.Height = this.Height;
+        //    //pic.Image = Image.FromFile(@"E:\\86d6277f9e2f070891004d53e424b899a901f258.jpg");
+        //    pic.SizeMode = PictureBoxSizeMode.StretchImage;
+        //    //pic.Load("http://e.hiphotos.baidu.com/image/pic/item/9345d688d43f8794906df240df1b0ef41ad53ac9.jpg");
+        //    pic.Load("http://led.tqcen.com/1.jpg");
+        //}
 
         /// <summary>
         /// 获取闲置时间
@@ -363,18 +388,6 @@ namespace TflmsW
                 }
             }
 
-            // 测试图片
-            if (e.KeyCode == Keys.T)
-            {
-                //AddPictureBox(0, 0);
-            }
-
-            // 测试图片
-            if (e.KeyCode == Keys.C)
-            {
-                this.Controls.Clear();
-            }
-
         }
 
         private void Timer2_Tick(object sender, EventArgs e)
@@ -396,5 +409,30 @@ namespace TflmsW
                 }
             }
         }
+
+        // 文件取得
+        public void ReadIt(String filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    fileCmdContent = File.ReadAllText(filePath);
+                    byte[] mybyte = Encoding.UTF8.GetBytes(fileCmdContent);
+                    fileCmdContent = Encoding.UTF8.GetString(mybyte);
+                }
+                else
+                {
+                    //MessageBox.Show("文件不存在");
+                    File.WriteAllText("app_log.txt", "文件不存在");
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                File.WriteAllText("app_log.txt", ex.Message);
+            }
+        }
+
     }
 }

@@ -375,7 +375,7 @@ class Index extends TflmsMBase
 
                         if(!file_exists("playfiles")){return "放映材料异常！";}
                         $this->wLog("[管理行为]执行了一次滚动放映任务", $who);
-                        if($this->CreControlKey("led_play")){return "操作成功！";}
+                        if($this->CreControlKey("led_carousel")){return "操作成功！";}
                         break;
                     case "fdel":
                         if(file_exists("playfile") && unlink("playfile")){
