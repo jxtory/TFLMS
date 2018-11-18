@@ -386,6 +386,8 @@ class Index extends TflmsMBase
                             $pfc[] = $value['fileUrl'] . "." . $value['fileType'];
                         }
 
+                        if(count($pfc) < 2){return "至少要2张滚动图!";}
+
                         $pfc = implode(",", $pfc);
                         file_put_contents("playfiles", $pfc);
 

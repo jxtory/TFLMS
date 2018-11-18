@@ -11,3 +11,7 @@ E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csproj.CoreCompileInputs.cache
 E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.exe
 E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.pdb
 E:\TFLMS\TflmsW\TflmsW\obj\Release\TflmsW.csprojAssemblyReference.cache
+E:\TFLMS\TflmsW\TflmsW\bin\Release\Interop.WMPLib.dll
+E:\TFLMS\TflmsW\TflmsW\bin\Release\AxInterop.WMPLib.dll
+E:\TFLMS\TflmsW\TflmsW\obj\Release\Interop.WMPLib.dll
+E:\TFLMS\TflmsW\TflmsW\obj\Release\AxInterop.WMPLib.dll

@@ -28,6 +28,8 @@ namespace TflmsW
         public String[] fileList = null;
         // 图像资源
         public List<Image> pictures = new List<Image>();
+        // 滚动位置
+        public int PicPos = 0;
 
 
         // LED 显示器开关控制
@@ -124,9 +126,8 @@ namespace TflmsW
             Cursor = Cursors.Default;
 
             // 放映器
-            this.BackColor = Color.Black;
             this.BackgroundImageLayout = ImageLayout.Stretch;
-
+            this.VideoPlayer.Visible = false;
 
         }
 
@@ -144,20 +145,65 @@ namespace TflmsW
             if (File.Exists(appPath + "/led_play"))
             {
                 DeleteFile(appPath + "/led_play");
+                // 取消一遍
+                this.BackgroundImage = null;
+                this.BackColor = Color.FromArgb(255, 0, 0, 51);
+                this.BackColor = Color.Black;
+                this.VideoPlayer.Ctlcontrols.stop();
+                this.VideoPlayer.Visible = false;
+                this.VideoPlayer.URL = "";
+                this.Timer3.Enabled = false;
+                this.PicPos = 0;
+                pictures = new List<Image>();
+                fileList = null;
+
                 ReadIt(appPath + "/playfile");
                 String playFile = fileCmdContent;
-                this.BackgroundImage = Image.FromFile(appPath + "/tqupload/" + fileCmdContent);
-
+                String fileType = fileCmdContent.Split('.')[1];
+                if(fileType == "mp4")
+                {
+                    this.VideoPlayer.uiMode = "None";
+                    this.VideoPlayer.Visible = true;
+                    this.VideoPlayer.Location = new Point(0, 0);
+                    this.VideoPlayer.Size = this.Size;
+                    this.VideoPlayer.Height = this.Height - (this.Height - this.ClientRectangle.Height);
+                    this.VideoPlayer.URL = @appPath + "/tqupload/" + fileCmdContent;
+                    this.VideoPlayer.settings.setMode("loop", true);
+                    this.VideoPlayer.Ctlcontrols.play();
+                }
+                else
+                {
+                    this.BackgroundImage = Image.FromFile(appPath + "/tqupload/" + fileCmdContent);
+                }
             }
 
             // 滚动放映
             if (File.Exists(appPath + "/led_carousel"))
             {
                 DeleteFile(appPath + "/led_carousel");
-                ReadIt(appPath + "/playfiles");
-                String playFile = fileCmdContent;
-                this.BackgroundImage = Image.FromFile(appPath + "/tqupload/" + fileCmdContent);
+                // 取消一遍
+                this.BackgroundImage = null;
+                this.BackColor = Color.FromArgb(255, 0, 0, 51);
+                this.BackColor = Color.Black;
+                this.VideoPlayer.Ctlcontrols.stop();
+                this.VideoPlayer.Visible = false;
+                this.VideoPlayer.URL = "";
+                this.Timer3.Enabled = false;
+                this.PicPos = 0;
+                pictures = new List<Image>();
+                fileList = null;
 
+                ReadIt(appPath + "/playfiles");
+                fileList = fileCmdContent.Split(',');
+                for (int i = 0; i < fileList.Length; i++)
+                {
+                    Image subPlay = Image.FromFile(appPath + "/tqupload/" + fileList[i]);
+                    pictures.Add(subPlay);
+                }
+
+                this.PicPos = 0;
+                this.BackgroundImage = pictures[0];
+                Timer3.Enabled = true;
             }
 
             // 取消放映
@@ -165,6 +211,19 @@ namespace TflmsW
             {
                 DeleteFile(appPath + "/led_stop");
                 this.BackgroundImage = null;
+                this.BackColor = Color.FromArgb(255, 0, 0, 51);
+                this.VideoPlayer.Ctlcontrols.stop();
+                this.VideoPlayer.Visible = false;
+                this.VideoPlayer.URL = "";
+                this.Timer3.Enabled = false;
+                this.PicPos = 0;
+                pictures = new List<Image>();
+                fileList = null;
+
+                //Graphics g = this.CreateGraphics();
+                //Font font = new Font("宋体", 24, FontStyle.Bold | FontStyle.Italic | FontStyle.Underline, GraphicsUnit.Point);//其中宋体是字体，24是字号，FontStyle的几个是字的样式，最后的GraphicsUnit是字的度量单位（可以看一下上边的表）
+                //g.DrawString("四分之三·IT中心", font, Brushes.Brown, new Point(0, this.Height / 2));//绘制字体，font是上边定义的字体，Brushes.Brown是颜色，Point是字从哪个位置开始绘制
+                //g.Dispose();
 
             }
 
@@ -429,6 +488,17 @@ namespace TflmsW
             }
         }
 
+        private void Timer3_Tick(object sender, EventArgs e)
+        {
+            this.PicPos++;
+            if (this.PicPos >= fileList.Length)
+            {
+                this.PicPos = 0;
+            }
+            this.BackgroundImage = pictures[this.PicPos];
+
+        }
+
         // 文件取得
         public void ReadIt(String filePath)
         {
@@ -453,5 +523,12 @@ namespace TflmsW
             }
         }
 
+        private void VideoPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            if ((int)VideoPlayer.playState == 3)
+            {
+                VideoPlayer.fullScreen = true;
+            }
+        }
     }
 }
