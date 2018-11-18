@@ -83,6 +83,7 @@ class Index extends TflmsMBase
                     switch ($datas['act'])
                     {
                     case "playIt":
+                        if(file_exists("playfile")){unlink("playfile");}
                         if($this->CreControlKey("playfile", $filecur['fileUrl'] . "." . $filecur['fileType'])){
                             $this->wLog("[管理行为]{$companyName}-的文件被提出播放", $who);
                             return "操作成功！";
@@ -225,7 +226,18 @@ class Index extends TflmsMBase
                     case "PassID":
                         $res = db("invitation")->where('id', $datas['cid'])->delete();
                         if($res){
-                            $this->wLog("[管理行为]删除公司-{$companyName}", $who);
+                            $files = db("files")->where("cid", $datas['cid'])->select();
+                            $delFiles = db("files")->where("cid", $datas['cid'])->delete();
+                            foreach ($files as $key => $value) {
+                                # code...
+                                if($value['fileType'] != "mp4"){
+                                    unlink($this->upPath . DS . $value['fileUrl'] . '.' . $value['fileType']);
+                                    unlink($this->upPath . DS . $value['fileUrl'] . '_thumb.' . $value['fileType']);
+                                } else {
+                                    unlink($this->upPath . DS . $value['fileUrl'] . '.' . $value['fileType']);
+}
+                            }
+                            $this->wLog("[管理行为]删除公司-{$companyName}, 及所有相关文件", $who);
                             return "操作成功！";
                         }
                         break;
@@ -355,6 +367,10 @@ class Index extends TflmsMBase
                     case "cled":
                         $this->wLog("[管理行为]控制大屏幕关机", $who);
                         if($this->CreControlKey("led_close")){return "操作成功！";}
+                        break;
+                    case "fstop":
+                        $this->wLog("[管理行为]取消了放映任务", $who);
+                        if($this->CreControlKey("led_stop")){return "操作成功！";}
                         break;
                     case "fplay":
                         if(!file_exists("playfile")){return "放映材料异常！";}

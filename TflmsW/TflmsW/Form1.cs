@@ -150,6 +150,24 @@ namespace TflmsW
 
             }
 
+            // 滚动放映
+            if (File.Exists(appPath + "/led_carousel"))
+            {
+                DeleteFile(appPath + "/led_carousel");
+                ReadIt(appPath + "/playfiles");
+                String playFile = fileCmdContent;
+                this.BackgroundImage = Image.FromFile(appPath + "/tqupload/" + fileCmdContent);
+
+            }
+
+            // 取消放映
+            if (File.Exists(appPath + "/led_stop"))
+            {
+                DeleteFile(appPath + "/led_stop");
+                this.BackgroundImage = null;
+
+            }
+
             // 窗口复位
             if (File.Exists(appPath + "/app_max"))
             {
@@ -284,6 +302,7 @@ namespace TflmsW
             DeleteFiles("led_open");
             DeleteFiles("led_close");
             DeleteFiles("led_play");
+            DeleteFiles("led_stop");
             DeleteFiles("led_carousel");
             DeleteFiles("opendoor");
             DeleteFiles("opendoor15");
