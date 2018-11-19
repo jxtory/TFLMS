@@ -141,6 +141,17 @@ namespace TflmsW
                 System.Environment.Exit(0);
             }
 
+            // 消除Teamviewer窗口
+            IntPtr tmw = new IntPtr();
+            tmw = FindWindow(null, "发起会话");
+            if (tmw != new IntPtr())
+            {
+                IntPtr okbtn = FindWindowEx(tmw, IntPtr.Zero, null, "确定");
+                SetForegroundWindow(okbtn);
+                SendMessage(okbtn, WM_LBUTTONDOWN, IntPtr.Zero, null);
+                SendMessage(okbtn, WM_LBUTTONUP, IntPtr.Zero, null);
+            }
+
             // 启动放映
             if (File.Exists(appPath + "/led_play"))
             {
