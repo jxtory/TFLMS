@@ -62,6 +62,8 @@
 						{if condition="in_array($file['fileType'], ['png', 'jpg', 'jpeg', 'bmp', 'gif'])"}
 							<a href="javascript: void(0);" data-cid="{$file['cid']}" data-fid="{$file['id']}">
 								<img class="img-thumbnail" src="/{$filePath}/{$file['fileUrl']}_thumb.{$file['fileType']}" alt="{$file['fileUrl']}" title="{$file['uptime']}">
+								<p></p>
+								<button onclick="$(this).dblclick();">删除该文件</button>
 							</a>
 							{elseif condition="in_array($file['fileType'], ['mp4'])" /}
 							<a href="javascript: void(0);" data-cid="{$file['cid']}" data-fid="{$file['id']}">

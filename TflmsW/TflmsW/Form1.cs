@@ -237,6 +237,10 @@ namespace TflmsW
                 this.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
                 this.Left = 0;
                 this.Top = 0;
+                this.WindowState = FormWindowState.Maximized;
+                this.Activate();
+                this.Show();
+
                 SetForegroundWindow(Handle1);
 
             }
