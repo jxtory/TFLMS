@@ -6,4 +6,12 @@
 
 	// 引擎文件引入
 	require __DIR__ . './Engine/thinkphp/start.php';
+
+/*
+	upload目录
+	<Files *>
+	 Options -Indexes
+	</Files>
+*/
+
 ?>
