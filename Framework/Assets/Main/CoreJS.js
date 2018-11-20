@@ -55,6 +55,12 @@ function LedControl(url)
 			act: $(this).data('ev')
 		} ,function(data, status){
 			if(status == "success"){
+				if(data == "DEL操作成功"){
+					setTimeout(function(){
+						location.replace(location.href);
+					},1500); 
+					data = "操作成功！";
+				}
 				layer.msg(data);
 			} else {
 				layer.msg("有问题！");

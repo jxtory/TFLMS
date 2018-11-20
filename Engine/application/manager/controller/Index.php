@@ -397,7 +397,7 @@ class Index extends TflmsMBase
                         break;
                     case "fdel":
                         if(file_exists("playfile") && unlink("playfile")){
-                            return "操作成功！";
+                            return "DEL操作成功";
                         } else {
                             return "当前或无设置";
                         }
