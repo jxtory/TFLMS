@@ -244,7 +244,7 @@ namespace TflmsW
                 DeleteFile(appPath + "/app_max");
                 SetForegroundWindow(Handle1);
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.WindowState = FormWindowState.Maximized;
+                // this.WindowState = FormWindowState.Maximized;
                 this.Width = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
                 this.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
                 this.Left = 0;
