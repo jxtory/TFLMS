@@ -20,6 +20,22 @@
 			</p>
 		</div>
 	</div>	
+	<div class="container text-center">
+		<h2>往期精彩回顾</h2>
+	</div>
+
+	<div class="container text-center">
+		{volist name="car" id="cars"}
+		<div class="img">
+			<img class="img-thumbnail" src="/{$filePath}/{$cars['fileUrl']}_thumb.{$cars['fileType']}" alt="{$cars['fileUrl']}" title="{$cars['uptime']}"><br>
+			{$cars['company']}
+			<hr>
+		</div>
+
+		{/volist}
+
+		
+	</div>
 	{include file="Common/footer" /}
 	{include file="Common/js" /}
 </body>

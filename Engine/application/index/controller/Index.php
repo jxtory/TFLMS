@@ -8,6 +8,23 @@ class Index extends TflmsBase
     public function index()
     {
         // 渲染首页
+
+        // *往期精彩回顾
+        // $datas = db('files a')
+        //     ->field("a.*, b.company")
+        //     ->join("invitation b", "b.id = a.cid")
+        //     ->where('carousel', '1')
+        //     ->select();
+        $datas = db('files a')
+                    ->join("invitation b", "b.id = a.cid")
+                    ->limit(10)
+                    ->order("a.id desc")
+                    ->select();
+
+        $this->assign("filePath", $this->upPath);
+        $this->assign("car", $datas);
+        // *E往期精彩回顾
+
         return $this->fetch();
     }
 
